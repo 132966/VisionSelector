@@ -1,0 +1,879 @@
++ export http_proxy=http://10.229.18.27:8412
++ http_proxy=http://10.229.18.27:8412
++ export https_proxy=http://10.229.18.27:8412
++ https_proxy=http://10.229.18.27:8412
++ export HTTP_PROXY=http://10.229.18.27:8412
++ HTTP_PROXY=http://10.229.18.27:8412
++ export HTTPS_PROXY=http://10.229.18.27:8412
++ HTTPS_PROXY=http://10.229.18.27:8412
++ EVAL_TIME=False
++ BASE_COMMAND='CUDA_VISIBLE_DEVICES=0,1,2,3 python3 -m accelerate.commands.launch     --main_process_port=0     --mixed_precision=bf16     --num_processes=4     -m lmms_eval     --model qwen2_5_vl_with_token_compression     --batch_size 1     --log_samples'
++ METHODS=("selector 3b attn_implementation="flash_attention_2"")
++ BUDGETS=(0.2)
++ MODEL_PATH=../output_ckpt/VisionSelector-Qwen2.5-VL-3B
++ MODEL_NAME=VisionSelector-Qwen2.5-VL-3B
++ TASKS=("docvqa_val" "chartqa" "textvqa_val" "ocrbench" "scienceqa_img" "ai2d_no_mask" "mmmu_val" "mme" "pope")
++ for TASK in "${TASKS[@]}"
++ for METHOD_CONFIG in "${METHODS[@]}"
+++ echo 'selector 3b attn_implementation=flash_attention_2'
+++ awk '{print $1}'
++ METHOD=selector
+++ echo 'selector 3b attn_implementation=flash_attention_2'
+++ awk '{print $2}'
++ FILENAME=3b
+++ echo 'selector 3b attn_implementation=flash_attention_2'
+++ awk '{$1="";$2=""; print $0}'
+++ xargs
++ ADDITIONAL_ARGS=attn_implementation=flash_attention_2
++ for BUDGET in "${BUDGETS[@]}"
++ OUTPUT_PATH=./result/eval_time/docvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b
++ LOG_FILE=./result/eval_time/docvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b/log_time.log
++ compgen -G './result/eval_time/docvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b/*results*.json'
++ '[' -d ./result/eval_time/docvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b ']'
++ mkdir -p ./result/eval_time/docvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b
++ MODEL_ARGS=pretrained=../output_ckpt/VisionSelector-Qwen2.5-VL-3B,method=selector,budgets=0.2,attn_implementation=flash_attention_2
++ COMMAND='EVAL_TIME=False CUDA_VISIBLE_DEVICES=0,1,2,3 python3 -m accelerate.commands.launch     --main_process_port=0     --mixed_precision=bf16     --num_processes=4     -m lmms_eval     --model qwen2_5_vl_with_token_compression     --batch_size 1     --log_samples --tasks docvqa_val --output_path ./result/eval_time/docvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b --log_samples_suffix docvqa_val --model_args "pretrained=../output_ckpt/VisionSelector-Qwen2.5-VL-3B,method=selector,budgets=0.2,attn_implementation=flash_attention_2"'
++ tee ./result/eval_time/docvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b/log_time.log
++ eval 'EVAL_TIME=False CUDA_VISIBLE_DEVICES=0,1,2,3 python3 -m accelerate.commands.launch     --main_process_port=0     --mixed_precision=bf16     --num_processes=4     -m lmms_eval     --model qwen2_5_vl_with_token_compression     --batch_size 1     --log_samples --tasks docvqa_val --output_path ./result/eval_time/docvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b --log_samples_suffix docvqa_val --model_args "pretrained=../output_ckpt/VisionSelector-Qwen2.5-VL-3B,method=selector,budgets=0.2,attn_implementation=flash_attention_2"'
+++ EVAL_TIME=False
+++ CUDA_VISIBLE_DEVICES=0,1,2,3
+++ python3 -m accelerate.commands.launch --main_process_port=0 --mixed_precision=bf16 --num_processes=4 -m lmms_eval --model qwen2_5_vl_with_token_compression --batch_size 1 --log_samples --tasks docvqa_val --output_path ./result/eval_time/docvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b --log_samples_suffix docvqa_val --model_args pretrained=../output_ckpt/VisionSelector-Qwen2.5-VL-3B,method=selector,budgets=0.2,attn_implementation=flash_attention_2
+The following values were not passed to `accelerate launch` and had defaults used instead:
+		More than one GPU was found, enabling multi-GPU training.
+		If this was unintended please pass in `--num_processes=1`.
+	`--num_machines` was set to a value of `1`
+	`--dynamo_backend` was set to a value of `'no'`
+To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
+Error.  nthreads cannot be larger than environment variable "NUMEXPR_MAX_THREADS" (64)Error.  nthreads cannot be larger than environment variable "NUMEXPR_MAX_THREADS" (64)Error.  nthreads cannot be larger than environment variable "NUMEXPR_MAX_THREADS" (64)Error.  nthreads cannot be larger than environment variable "NUMEXPR_MAX_THREADS" (64)[32m2026-07-07 12:45:58.682[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate[0m:[36m296[0m - [1mVerbosity set to INFO[0m
+[32m2026-07-07 12:45:58.765[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate[0m:[36m296[0m - [1mVerbosity set to INFO[0m
+[32m2026-07-07 12:45:58.773[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate[0m:[36m296[0m - [1mVerbosity set to INFO[0m
+[32m2026-07-07 12:45:58.774[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate[0m:[36m296[0m - [1mVerbosity set to INFO[0m
+[RANK 0] Detected kernel version 4.18.0, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
+[32m2026-07-07 12:46:00.358[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m386[0m - [1mEvaluation tracker args: {'output_path': './result/eval_time/docvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b'}[0m
+[32m2026-07-07 12:46:00.359[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m475[0m - [1mSelected Tasks: ['docvqa_val'][0m
+[32m2026-07-07 12:46:00.360[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36msimple_evaluate[0m:[36m158[0m - [1mSetting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234[0m
+[32m2026-07-07 12:46:00.482[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m386[0m - [1mEvaluation tracker args: {'output_path': './result/eval_time/docvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b'}[0m
+[32m2026-07-07 12:46:00.483[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m475[0m - [1mSelected Tasks: ['docvqa_val'][0m
+[32m2026-07-07 12:46:00.484[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36msimple_evaluate[0m:[36m158[0m - [1mSetting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234[0m
+[32m2026-07-07 12:46:00.511[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m386[0m - [1mEvaluation tracker args: {'output_path': './result/eval_time/docvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b'}[0m
+[32m2026-07-07 12:46:00.511[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m475[0m - [1mSelected Tasks: ['docvqa_val'][0m
+[32m2026-07-07 12:46:00.512[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36msimple_evaluate[0m:[36m158[0m - [1mSetting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234[0m
+[32m2026-07-07 12:46:00.518[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m386[0m - [1mEvaluation tracker args: {'output_path': './result/eval_time/docvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b'}[0m
+[32m2026-07-07 12:46:00.518[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m475[0m - [1mSelected Tasks: ['docvqa_val'][0m
+[32m2026-07-07 12:46:00.519[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36msimple_evaluate[0m:[36m158[0m - [1mSetting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234[0m
+Generating validation split:   0%|          | 0/5349 [00:00<?, ? examples/s]Generating validation split:   2%|▏         | 100/5349 [00:00<00:12, 407.67 examples/s]Generating validation split:   6%|▌         | 300/5349 [00:00<00:06, 835.88 examples/s]Generating validation split:   6%|▌         | 300/5349 [00:00<00:06, 755.86 examples/s]
+Traceback (most recent call last):
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/builder.py", line 1800, in _prepare_split_single
+    writer.write_table(table)
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/arrow_writer.py", line 765, in write_table
+    self._write_table(pa_table, writer_batch_size=writer_batch_size)
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/arrow_writer.py", line 778, in _write_table
+    self.pa_writer.write_table(pa_table, writer_batch_size)
+  File "pyarrow/ipc.pxi", line 616, in pyarrow.lib._CRecordBatchWriter.write_table
+  File "pyarrow/error.pxi", line 89, in pyarrow.lib.check_status
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/fsspec/implementations/local.py", line 473, in write
+    return self.f.write(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/builder.py", line 1821, in _prepare_split_single
+    num_examples, num_bytes = writer.finalize()
+                              ^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/arrow_writer.py", line 791, in finalize
+    self.stream.close()
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/fsspec/implementations/local.py", line 491, in close
+    return self.f.close()
+           ^^^^^^^^^^^^^^
+OSError: [Errno 28] No space left on device
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 470, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/api/task.py", line 1052, in download
+    self.dataset = datasets.load_dataset(
+                   ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/load.py", line 1708, in load_dataset
+    builder_instance.download_and_prepare(
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/builder.py", line 882, in download_and_prepare
+    self._download_and_prepare(
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/builder.py", line 943, in _download_and_prepare
+    self._prepare_split(split_generator, **prepare_split_kwargs)
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/builder.py", line 1646, in _prepare_split
+    for job_id, done, content in self._prepare_split_single(
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/builder.py", line 1832, in _prepare_split_single
+    raise DatasetGenerationError("An error occurred while generating the dataset") from e
+datasets.exceptions.DatasetGenerationError: An error occurred while generating the dataset
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/__main__.py", line 335, in cli_evaluate
+    results, samples = cli_evaluate_single(args)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/__main__.py", line 479, in cli_evaluate_single
+    results = evaluator.simple_evaluate(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/utils.py", line 533, in _wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/evaluator.py", line 176, in simple_evaluate
+    task_dict = get_task_dict(tasks, task_manager)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/tasks/__init__.py", line 558, in get_task_dict
+    task_name_from_string_dict = task_manager.load_task_or_group(
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/tasks/__init__.py", line 372, in load_task_or_group
+    all_loaded_tasks = dict(collections.ChainMap(*map(self._load_individual_task_or_group, task_list)))
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/tasks/__init__.py", line 289, in _load_individual_task_or_group
+    return _load_task(task_config, task=name_or_config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/tasks/__init__.py", line 259, in _load_task
+    task_object = ConfigurableTask(config=config, model_name=self.model_name)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/api/task.py", line 720, in __init__
+    self.download(self.config.dataset_kwargs)
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 330, in wrapped_f
+    return self(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 467, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 368, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 411, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x7fa230d54380 state=finished raised DatasetGenerationError>]
+[32m2026-07-07 12:51:03.136[0m | [31m[1mERROR   [0m | [36m__main__[0m:[36mcli_evaluate[0m:[36m357[0m - [31m[1mError during evaluation: RetryError[<Future at 0x7fa230d54380 state=finished raised DatasetGenerationError>]. Please set `--verbosity=DEBUG` to get more information.[0m
+Generating validation split:   0%|          | 0/5349 [00:00<?, ? examples/s]Generating validation split:   2%|▏         | 100/5349 [00:00<00:13, 399.97 examples/s]Generating validation split:   6%|▌         | 300/5349 [00:00<00:06, 829.93 examples/s]Generating validation split:   6%|▌         | 300/5349 [00:00<00:06, 748.88 examples/s]
+Traceback (most recent call last):
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/builder.py", line 1800, in _prepare_split_single
+    writer.write_table(table)
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/arrow_writer.py", line 765, in write_table
+    self._write_table(pa_table, writer_batch_size=writer_batch_size)
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/arrow_writer.py", line 778, in _write_table
+    self.pa_writer.write_table(pa_table, writer_batch_size)
+  File "pyarrow/ipc.pxi", line 616, in pyarrow.lib._CRecordBatchWriter.write_table
+  File "pyarrow/error.pxi", line 89, in pyarrow.lib.check_status
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/fsspec/implementations/local.py", line 473, in write
+    return self.f.write(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/builder.py", line 1821, in _prepare_split_single
+    num_examples, num_bytes = writer.finalize()
+                              ^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/arrow_writer.py", line 791, in finalize
+    self.stream.close()
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/fsspec/implementations/local.py", line 491, in close
+    return self.f.close()
+           ^^^^^^^^^^^^^^
+OSError: [Errno 28] No space left on device
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 470, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/api/task.py", line 1052, in download
+    self.dataset = datasets.load_dataset(
+                   ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/load.py", line 1708, in load_dataset
+    builder_instance.download_and_prepare(
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/builder.py", line 882, in download_and_prepare
+    self._download_and_prepare(
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/builder.py", line 943, in _download_and_prepare
+    self._prepare_split(split_generator, **prepare_split_kwargs)
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/builder.py", line 1646, in _prepare_split
+    for job_id, done, content in self._prepare_split_single(
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/builder.py", line 1832, in _prepare_split_single
+    raise DatasetGenerationError("An error occurred while generating the dataset") from e
+datasets.exceptions.DatasetGenerationError: An error occurred while generating the dataset
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/__main__.py", line 335, in cli_evaluate
+    results, samples = cli_evaluate_single(args)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/__main__.py", line 479, in cli_evaluate_single
+    results = evaluator.simple_evaluate(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/utils.py", line 533, in _wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/evaluator.py", line 176, in simple_evaluate
+    task_dict = get_task_dict(tasks, task_manager)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/tasks/__init__.py", line 558, in get_task_dict
+    task_name_from_string_dict = task_manager.load_task_or_group(
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/tasks/__init__.py", line 372, in load_task_or_group
+    all_loaded_tasks = dict(collections.ChainMap(*map(self._load_individual_task_or_group, task_list)))
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/tasks/__init__.py", line 289, in _load_individual_task_or_group
+    return _load_task(task_config, task=name_or_config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/tasks/__init__.py", line 259, in _load_task
+    task_object = ConfigurableTask(config=config, model_name=self.model_name)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/api/task.py", line 720, in __init__
+    self.download(self.config.dataset_kwargs)
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 330, in wrapped_f
+    return self(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 467, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 368, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 411, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x7f0628a627e0 state=finished raised DatasetGenerationError>]
+[32m2026-07-07 12:51:05.072[0m | [31m[1mERROR   [0m | [36m__main__[0m:[36mcli_evaluate[0m:[36m357[0m - [31m[1mError during evaluation: RetryError[<Future at 0x7f0628a627e0 state=finished raised DatasetGenerationError>]. Please set `--verbosity=DEBUG` to get more information.[0m
+Generating validation split:   0%|          | 0/5349 [00:00<?, ? examples/s]Generating validation split:   2%|▏         | 100/5349 [00:00<00:12, 405.97 examples/s]Generating validation split:   6%|▌         | 300/5349 [00:00<00:06, 840.06 examples/s]Generating validation split:   6%|▌         | 300/5349 [00:00<00:06, 758.42 examples/s]
+Traceback (most recent call last):
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/builder.py", line 1800, in _prepare_split_single
+    writer.write_table(table)
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/arrow_writer.py", line 765, in write_table
+    self._write_table(pa_table, writer_batch_size=writer_batch_size)
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/arrow_writer.py", line 778, in _write_table
+    self.pa_writer.write_table(pa_table, writer_batch_size)
+  File "pyarrow/ipc.pxi", line 616, in pyarrow.lib._CRecordBatchWriter.write_table
+  File "pyarrow/error.pxi", line 89, in pyarrow.lib.check_status
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/fsspec/implementations/local.py", line 473, in write
+    return self.f.write(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/builder.py", line 1821, in _prepare_split_single
+    num_examples, num_bytes = writer.finalize()
+                              ^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/arrow_writer.py", line 791, in finalize
+    self.stream.close()
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/fsspec/implementations/local.py", line 491, in close
+    return self.f.close()
+           ^^^^^^^^^^^^^^
+OSError: [Errno 28] No space left on device
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 470, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/api/task.py", line 1052, in download
+    self.dataset = datasets.load_dataset(
+                   ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/load.py", line 1708, in load_dataset
+    builder_instance.download_and_prepare(
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/builder.py", line 882, in download_and_prepare
+    self._download_and_prepare(
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/builder.py", line 943, in _download_and_prepare
+    self._prepare_split(split_generator, **prepare_split_kwargs)
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/builder.py", line 1646, in _prepare_split
+    for job_id, done, content in self._prepare_split_single(
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/builder.py", line 1832, in _prepare_split_single
+    raise DatasetGenerationError("An error occurred while generating the dataset") from e
+datasets.exceptions.DatasetGenerationError: An error occurred while generating the dataset
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/__main__.py", line 335, in cli_evaluate
+    results, samples = cli_evaluate_single(args)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/__main__.py", line 479, in cli_evaluate_single
+    results = evaluator.simple_evaluate(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/utils.py", line 533, in _wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/evaluator.py", line 176, in simple_evaluate
+    task_dict = get_task_dict(tasks, task_manager)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/tasks/__init__.py", line 558, in get_task_dict
+    task_name_from_string_dict = task_manager.load_task_or_group(
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/tasks/__init__.py", line 372, in load_task_or_group
+    all_loaded_tasks = dict(collections.ChainMap(*map(self._load_individual_task_or_group, task_list)))
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/tasks/__init__.py", line 289, in _load_individual_task_or_group
+    return _load_task(task_config, task=name_or_config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/tasks/__init__.py", line 259, in _load_task
+    task_object = ConfigurableTask(config=config, model_name=self.model_name)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/api/task.py", line 720, in __init__
+    self.download(self.config.dataset_kwargs)
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 330, in wrapped_f
+    return self(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 467, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 368, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 411, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x7fca05dba120 state=finished raised DatasetGenerationError>]
+[32m2026-07-07 12:51:06.810[0m | [31m[1mERROR   [0m | [36m__main__[0m:[36mcli_evaluate[0m:[36m357[0m - [31m[1mError during evaluation: RetryError[<Future at 0x7fca05dba120 state=finished raised DatasetGenerationError>]. Please set `--verbosity=DEBUG` to get more information.[0m
+[rank0]:[W707 12:51:07.099479701 ProcessGroupNCCL.cpp:1496] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+Generating validation split:   0%|          | 0/5349 [00:00<?, ? examples/s]Generating validation split:   2%|▏         | 100/5349 [00:00<00:12, 408.38 examples/s]Generating validation split:   6%|▌         | 300/5349 [00:00<00:06, 834.41 examples/s]Generating validation split:   6%|▌         | 300/5349 [00:00<00:06, 755.03 examples/s]
+Traceback (most recent call last):
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/builder.py", line 1800, in _prepare_split_single
+    writer.write_table(table)
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/arrow_writer.py", line 765, in write_table
+    self._write_table(pa_table, writer_batch_size=writer_batch_size)
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/arrow_writer.py", line 778, in _write_table
+    self.pa_writer.write_table(pa_table, writer_batch_size)
+  File "pyarrow/ipc.pxi", line 616, in pyarrow.lib._CRecordBatchWriter.write_table
+  File "pyarrow/error.pxi", line 89, in pyarrow.lib.check_status
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/fsspec/implementations/local.py", line 473, in write
+    return self.f.write(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/builder.py", line 1821, in _prepare_split_single
+    num_examples, num_bytes = writer.finalize()
+                              ^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/arrow_writer.py", line 791, in finalize
+    self.stream.close()
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/fsspec/implementations/local.py", line 491, in close
+    return self.f.close()
+           ^^^^^^^^^^^^^^
+OSError: [Errno 28] No space left on device
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 470, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/api/task.py", line 1052, in download
+    self.dataset = datasets.load_dataset(
+                   ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/load.py", line 1708, in load_dataset
+    builder_instance.download_and_prepare(
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/builder.py", line 882, in download_and_prepare
+    self._download_and_prepare(
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/builder.py", line 943, in _download_and_prepare
+    self._prepare_split(split_generator, **prepare_split_kwargs)
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/builder.py", line 1646, in _prepare_split
+    for job_id, done, content in self._prepare_split_single(
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/builder.py", line 1832, in _prepare_split_single
+    raise DatasetGenerationError("An error occurred while generating the dataset") from e
+datasets.exceptions.DatasetGenerationError: An error occurred while generating the dataset
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/__main__.py", line 335, in cli_evaluate
+    results, samples = cli_evaluate_single(args)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/__main__.py", line 479, in cli_evaluate_single
+    results = evaluator.simple_evaluate(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/utils.py", line 533, in _wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/evaluator.py", line 176, in simple_evaluate
+    task_dict = get_task_dict(tasks, task_manager)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/tasks/__init__.py", line 558, in get_task_dict
+    task_name_from_string_dict = task_manager.load_task_or_group(
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/tasks/__init__.py", line 372, in load_task_or_group
+    all_loaded_tasks = dict(collections.ChainMap(*map(self._load_individual_task_or_group, task_list)))
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/tasks/__init__.py", line 289, in _load_individual_task_or_group
+    return _load_task(task_config, task=name_or_config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/tasks/__init__.py", line 259, in _load_task
+    task_object = ConfigurableTask(config=config, model_name=self.model_name)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/api/task.py", line 720, in __init__
+    self.download(self.config.dataset_kwargs)
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 330, in wrapped_f
+    return self(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 467, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 368, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 411, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x7ff69141e900 state=finished raised DatasetGenerationError>]
+[32m2026-07-07 12:51:08.418[0m | [31m[1mERROR   [0m | [36m__main__[0m:[36mcli_evaluate[0m:[36m357[0m - [31m[1mError during evaluation: RetryError[<Future at 0x7ff69141e900 state=finished raised DatasetGenerationError>]. Please set `--verbosity=DEBUG` to get more information.[0m
++ [[ false == \t\r\u\e ]]
++ for TASK in "${TASKS[@]}"
++ for METHOD_CONFIG in "${METHODS[@]}"
+++ echo 'selector 3b attn_implementation=flash_attention_2'
+++ awk '{print $1}'
++ METHOD=selector
+++ echo 'selector 3b attn_implementation=flash_attention_2'
+++ awk '{print $2}'
++ FILENAME=3b
+++ echo 'selector 3b attn_implementation=flash_attention_2'
+++ awk '{$1="";$2=""; print $0}'
+++ xargs
++ ADDITIONAL_ARGS=attn_implementation=flash_attention_2
++ for BUDGET in "${BUDGETS[@]}"
++ OUTPUT_PATH=./result/eval_time/chartqa/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b
++ LOG_FILE=./result/eval_time/chartqa/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b/log_time.log
++ compgen -G './result/eval_time/chartqa/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b/*results*.json'
++ '[' -d ./result/eval_time/chartqa/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b ']'
++ mkdir -p ./result/eval_time/chartqa/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b
++ MODEL_ARGS=pretrained=../output_ckpt/VisionSelector-Qwen2.5-VL-3B,method=selector,budgets=0.2,attn_implementation=flash_attention_2
++ COMMAND='EVAL_TIME=False CUDA_VISIBLE_DEVICES=0,1,2,3 python3 -m accelerate.commands.launch     --main_process_port=0     --mixed_precision=bf16     --num_processes=4     -m lmms_eval     --model qwen2_5_vl_with_token_compression     --batch_size 1     --log_samples --tasks chartqa --output_path ./result/eval_time/chartqa/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b --log_samples_suffix chartqa --model_args "pretrained=../output_ckpt/VisionSelector-Qwen2.5-VL-3B,method=selector,budgets=0.2,attn_implementation=flash_attention_2"'
++ tee ./result/eval_time/chartqa/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b/log_time.log
++ eval 'EVAL_TIME=False CUDA_VISIBLE_DEVICES=0,1,2,3 python3 -m accelerate.commands.launch     --main_process_port=0     --mixed_precision=bf16     --num_processes=4     -m lmms_eval     --model qwen2_5_vl_with_token_compression     --batch_size 1     --log_samples --tasks chartqa --output_path ./result/eval_time/chartqa/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b --log_samples_suffix chartqa --model_args "pretrained=../output_ckpt/VisionSelector-Qwen2.5-VL-3B,method=selector,budgets=0.2,attn_implementation=flash_attention_2"'
+++ EVAL_TIME=False
+++ CUDA_VISIBLE_DEVICES=0,1,2,3
+++ python3 -m accelerate.commands.launch --main_process_port=0 --mixed_precision=bf16 --num_processes=4 -m lmms_eval --model qwen2_5_vl_with_token_compression --batch_size 1 --log_samples --tasks chartqa --output_path ./result/eval_time/chartqa/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b --log_samples_suffix chartqa --model_args pretrained=../output_ckpt/VisionSelector-Qwen2.5-VL-3B,method=selector,budgets=0.2,attn_implementation=flash_attention_2
+The following values were not passed to `accelerate launch` and had defaults used instead:
+		More than one GPU was found, enabling multi-GPU training.
+		If this was unintended please pass in `--num_processes=1`.
+	`--num_machines` was set to a value of `1`
+	`--dynamo_backend` was set to a value of `'no'`
+To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
+Error.  nthreads cannot be larger than environment variable "NUMEXPR_MAX_THREADS" (64)Error.  nthreads cannot be larger than environment variable "NUMEXPR_MAX_THREADS" (64)Error.  nthreads cannot be larger than environment variable "NUMEXPR_MAX_THREADS" (64)Error.  nthreads cannot be larger than environment variable "NUMEXPR_MAX_THREADS" (64)[32m2026-07-07 12:51:17.526[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate[0m:[36m296[0m - [1mVerbosity set to INFO[0m
+[32m2026-07-07 12:51:17.544[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate[0m:[36m296[0m - [1mVerbosity set to INFO[0m
+[32m2026-07-07 12:51:17.585[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate[0m:[36m296[0m - [1mVerbosity set to INFO[0m
+[32m2026-07-07 12:51:17.610[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate[0m:[36m296[0m - [1mVerbosity set to INFO[0m
+[RANK 0] Detected kernel version 4.18.0, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
+[32m2026-07-07 12:51:19.263[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m386[0m - [1mEvaluation tracker args: {'output_path': './result/eval_time/chartqa/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b'}[0m
+[32m2026-07-07 12:51:19.264[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m475[0m - [1mSelected Tasks: ['chartqa'][0m
+[32m2026-07-07 12:51:19.265[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36msimple_evaluate[0m:[36m158[0m - [1mSetting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234[0m
+[32m2026-07-07 12:51:19.265[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m386[0m - [1mEvaluation tracker args: {'output_path': './result/eval_time/chartqa/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b'}[0m
+[32m2026-07-07 12:51:19.266[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m475[0m - [1mSelected Tasks: ['chartqa'][0m
+[32m2026-07-07 12:51:19.267[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36msimple_evaluate[0m:[36m158[0m - [1mSetting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234[0m
+[32m2026-07-07 12:51:19.332[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m386[0m - [1mEvaluation tracker args: {'output_path': './result/eval_time/chartqa/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b'}[0m
+[32m2026-07-07 12:51:19.333[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m475[0m - [1mSelected Tasks: ['chartqa'][0m
+[32m2026-07-07 12:51:19.334[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36msimple_evaluate[0m:[36m158[0m - [1mSetting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234[0m
+[32m2026-07-07 12:51:19.340[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m386[0m - [1mEvaluation tracker args: {'output_path': './result/eval_time/chartqa/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b'}[0m
+[32m2026-07-07 12:51:19.341[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m475[0m - [1mSelected Tasks: ['chartqa'][0m
+[32m2026-07-07 12:51:19.342[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36msimple_evaluate[0m:[36m158[0m - [1mSetting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234[0m
+Generating test split:   0%|          | 0/2500 [00:00<?, ? examples/s]Generating test split:  44%|████▍     | 1100/2500 [00:00<00:00, 10691.45 examples/s]Generating test split: 100%|██████████| 2500/2500 [00:00<00:00, 13991.14 examples/s]
+using selector
+using selector
+[RANK 0] Detected kernel version 4.18.0, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
+using selector
+using selector
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:02<00:02,  2.15s/it]Loading checkpoint shards:  50%|█████     | 1/2 [00:02<00:02,  2.11s/it]Loading checkpoint shards:  50%|█████     | 1/2 [00:02<00:02,  2.13s/it]Loading checkpoint shards:  50%|█████     | 1/2 [00:02<00:02,  2.12s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.24s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.37s/it]
+Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.24s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.23s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.25s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.38s/it]
+Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.38s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.37s/it]
+
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.50, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.50, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.50, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.50, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+[32m2026-07-07 12:51:27.583[0m | [1mINFO    [0m | [36mlmms_eval.models.qwen2_5_vl_with_token_compression[0m:[36m__init__[0m:[36m161[0m - [1mUsing 4 devices with data parallelism[0m
+[32m2026-07-07 12:51:27.584[0m | [1mINFO    [0m | [36mlmms_eval.evaluator_utils[0m:[36mfrom_taskdict[0m:[36m91[0m - [1mNo metadata found in task config for chartqa, using default n_shot=0[0m
+[32m2026-07-07 12:51:27.584[0m | [1mINFO    [0m | [36mlmms_eval.api.task[0m:[36mbuild_all_requests[0m:[36m425[0m - [1mBuilding contexts for chartqa on rank 0...[0m
+  0%|          | 0/625 [00:00<?, ?it/s][32m2026-07-07 12:51:27.586[0m | [1mINFO    [0m | [36mlmms_eval.evaluator_utils[0m:[36mfrom_taskdict[0m:[36m91[0m - [1mNo metadata found in task config for chartqa, using default n_shot=0[0m
+[32m2026-07-07 12:51:27.586[0m | [1mINFO    [0m | [36mlmms_eval.api.task[0m:[36mbuild_all_requests[0m:[36m425[0m - [1mBuilding contexts for chartqa on rank 3...[0m
+  0%|          | 0/625 [00:00<?, ?it/s][32m2026-07-07 12:51:27.594[0m | [1mINFO    [0m | [36mlmms_eval.evaluator_utils[0m:[36mfrom_taskdict[0m:[36m91[0m - [1mNo metadata found in task config for chartqa, using default n_shot=0[0m
+[32m2026-07-07 12:51:27.594[0m | [1mINFO    [0m | [36mlmms_eval.api.task[0m:[36mbuild_all_requests[0m:[36m425[0m - [1mBuilding contexts for chartqa on rank 1...[0m
+  0%|          | 0/625 [00:00<?, ?it/s][32m2026-07-07 12:51:27.594[0m | [1mINFO    [0m | [36mlmms_eval.evaluator_utils[0m:[36mfrom_taskdict[0m:[36m91[0m - [1mNo metadata found in task config for chartqa, using default n_shot=0[0m
+[32m2026-07-07 12:51:27.595[0m | [1mINFO    [0m | [36mlmms_eval.api.task[0m:[36mbuild_all_requests[0m:[36m425[0m - [1mBuilding contexts for chartqa on rank 2...[0m
+  0%|          | 0/625 [00:00<?, ?it/s]100%|██████████| 625/625 [00:00<00:00, 14032.80it/s]
+100%|██████████| 625/625 [00:00<00:00, 13706.52it/s]
+100%|██████████| 625/625 [00:00<00:00, 13842.88it/s]
+100%|██████████| 625/625 [00:00<00:00, 13665.93it/s]
+[32m2026-07-07 12:51:29.127[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36mevaluate[0m:[36m465[0m - [1mRunning generate_until requests[0m
+[32m2026-07-07 12:51:29.127[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36mevaluate[0m:[36m465[0m - [1mRunning generate_until requests[0m
+[32m2026-07-07 12:51:29.127[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36mevaluate[0m:[36m465[0m - [1mRunning generate_until requests[0m
+[32m2026-07-07 12:51:29.127[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36mevaluate[0m:[36m465[0m - [1mRunning generate_until requests[0m
+Model Responding:   0%|          | 0/625 [00:00<?, ?it/s][2026-07-07 12:51:29,215] [INFO] [real_accelerator.py:222:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-07 12:51:29,238] [INFO] [real_accelerator.py:222:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-07 12:51:29,238] [INFO] [real_accelerator.py:222:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-07-07 12:51:29,239] [INFO] [real_accelerator.py:222:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+Model Responding:   0%|          | 1/625 [00:01<20:43,  1.99s/it]Model Responding:   0%|          | 2/625 [00:02<10:00,  1.04it/s]Model Responding:   0%|          | 3/625 [00:02<06:31,  1.59it/s]Model Responding:   1%|          | 4/625 [00:02<04:57,  2.09it/s]Model Responding:   1%|          | 5/625 [00:02<03:59,  2.58it/s]Model Responding:   1%|          | 6/625 [00:03<03:25,  3.02it/s]Model Responding:   1%|          | 7/625 [00:03<03:22,  3.05it/s]Model Responding:   1%|▏         | 8/625 [00:03<03:12,  3.20it/s]Model Responding:   1%|▏         | 9/625 [00:03<02:45,  3.72it/s]Model Responding:   2%|▏         | 10/625 [00:04<02:42,  3.79it/s]Model Responding:   2%|▏         | 11/625 [00:04<02:34,  3.97it/s]Model Responding:   2%|▏         | 12/625 [00:04<02:24,  4.25it/s]Model Responding:   2%|▏         | 13/625 [00:04<02:22,  4.31it/s]Model Responding:   2%|▏         | 14/625 [00:05<02:29,  4.09it/s]Model Responding:   2%|▏         | 15/625 [00:05<02:25,  4.19it/s]Model Responding:   3%|▎         | 16/625 [00:05<02:17,  4.42it/s]Model Responding:   3%|▎         | 17/625 [00:05<02:12,  4.59it/s]Model Responding:   3%|▎         | 18/625 [00:05<02:13,  4.56it/s]Model Responding:   3%|▎         | 19/625 [00:06<02:04,  4.88it/s]Model Responding:   3%|▎         | 20/625 [00:06<02:03,  4.91it/s]Model Responding:   3%|▎         | 21/625 [00:06<02:02,  4.93it/s]Model Responding:   4%|▎         | 22/625 [00:06<01:57,  5.15it/s]Model Responding:   4%|▎         | 23/625 [00:06<02:02,  4.91it/s]Model Responding:   4%|▍         | 24/625 [00:07<02:06,  4.76it/s]Model Responding:   4%|▍         | 25/625 [00:07<01:59,  5.03it/s]Model Responding:   4%|▍         | 26/625 [00:07<02:03,  4.84it/s]Model Responding:   4%|▍         | 27/625 [00:07<02:07,  4.71it/s]Model Responding:   4%|▍         | 28/625 [00:07<02:09,  4.63it/s]Model Responding:   5%|▍         | 29/625 [00:08<02:05,  4.75it/s]Model Responding:   5%|▍         | 30/625 [00:08<02:03,  4.81it/s]Model Responding:   5%|▍         | 31/625 [00:08<02:06,  4.69it/s]Model Responding:   5%|▌         | 32/625 [00:08<02:13,  4.45it/s]Model Responding:   5%|▌         | 33/625 [00:09<02:12,  4.46it/s]Model Responding:   5%|▌         | 34/625 [00:09<02:15,  4.37it/s]Model Responding:   6%|▌         | 35/625 [00:09<02:04,  4.74it/s]Model Responding:   6%|▌         | 36/625 [00:09<01:57,  5.03it/s]Model Responding:   6%|▌         | 37/625 [00:09<02:05,  4.67it/s]Model Responding:   6%|▌         | 38/625 [00:10<02:07,  4.61it/s]Model Responding:   6%|▌         | 39/625 [00:10<02:13,  4.40it/s]Model Responding:   6%|▋         | 40/625 [00:10<02:26,  4.00it/s]Model Responding:   7%|▋         | 41/625 [00:10<02:26,  4.00it/s]Model Responding:   7%|▋         | 42/625 [00:11<02:12,  4.41it/s]Model Responding:   7%|▋         | 43/625 [00:11<02:11,  4.43it/s]Model Responding:   7%|▋         | 44/625 [00:11<02:06,  4.60it/s]Model Responding:   7%|▋         | 45/625 [00:11<02:07,  4.55it/s]Model Responding:   7%|▋         | 46/625 [00:11<02:03,  4.70it/s]Model Responding:   8%|▊         | 47/625 [00:12<01:55,  5.00it/s]Model Responding:   8%|▊         | 48/625 [00:12<01:54,  5.03it/s]Model Responding:   8%|▊         | 49/625 [00:12<01:58,  4.85it/s]Model Responding:   8%|▊         | 50/625 [00:12<02:01,  4.74it/s]Model Responding:   8%|▊         | 51/625 [00:13<02:12,  4.34it/s]Model Responding:   8%|▊         | 52/625 [00:13<02:15,  4.23it/s]Model Responding:   8%|▊         | 53/625 [00:13<02:09,  4.43it/s]Model Responding:   9%|▊         | 54/625 [00:13<01:59,  4.79it/s]Model Responding:   9%|▉         | 55/625 [00:13<01:56,  4.87it/s]Model Responding:   9%|▉         | 56/625 [00:14<01:50,  5.13it/s]Model Responding:   9%|▉         | 57/625 [00:14<01:55,  4.91it/s]Model Responding:   9%|▉         | 58/625 [00:14<02:03,  4.60it/s]Model Responding:   9%|▉         | 59/625 [00:14<02:04,  4.56it/s]Model Responding:  10%|▉         | 60/625 [00:14<02:06,  4.48it/s]Model Responding:  10%|▉         | 61/625 [00:15<02:10,  4.33it/s]Model Responding:  10%|▉         | 62/625 [00:15<02:09,  4.35it/s]Model Responding:  10%|█         | 63/625 [00:15<01:59,  4.72it/s]Model Responding:  10%|█         | 64/625 [00:15<02:00,  4.64it/s]Model Responding:  10%|█         | 65/625 [00:16<01:57,  4.76it/s]Model Responding:  11%|█         | 66/625 [00:16<02:04,  4.50it/s]Model Responding:  11%|█         | 67/625 [00:16<01:59,  4.66it/s]Model Responding:  11%|█         | 68/625 [00:16<02:12,  4.21it/s]Model Responding:  11%|█         | 69/625 [00:17<02:14,  4.13it/s]Model Responding:  11%|█         | 70/625 [00:17<02:03,  4.48it/s]Model Responding:  11%|█▏        | 71/625 [00:17<01:54,  4.83it/s]Model Responding:  12%|█▏        | 72/625 [00:17<01:55,  4.79it/s]Model Responding:  12%|█▏        | 73/625 [00:17<01:57,  4.69it/s]Model Responding:  12%|█▏        | 74/625 [00:18<01:59,  4.62it/s]Model Responding:  12%|█▏        | 75/625 [00:18<01:56,  4.74it/s]Model Responding:  12%|█▏        | 76/625 [00:18<01:53,  4.84it/s]Model Responding:  12%|█▏        | 77/625 [00:18<01:56,  4.71it/s]Model Responding:  12%|█▏        | 78/625 [00:18<02:07,  4.29it/s]Model Responding:  13%|█▎        | 79/625 [00:19<02:06,  4.33it/s]Model Responding:  13%|█▎        | 80/625 [00:19<02:00,  4.54it/s]Model Responding:  13%|█▎        | 81/625 [00:19<02:21,  3.83it/s]Model Responding:  13%|█▎        | 82/625 [00:19<02:24,  3.77it/s]Model Responding:  13%|█▎        | 83/625 [00:20<02:09,  4.18it/s]Model Responding:  13%|█▎        | 84/625 [00:20<01:53,  4.75it/s]Model Responding:  14%|█▎        | 85/625 [00:20<01:52,  4.81it/s]Model Responding:  14%|█▍        | 86/625 [00:20<01:54,  4.69it/s]Model Responding:  14%|█▍        | 87/625 [00:21<02:05,  4.30it/s]Model Responding:  14%|█▍        | 88/625 [00:21<01:54,  4.68it/s]Model Responding:  14%|█▍        | 89/625 [00:21<01:51,  4.79it/s]Model Responding:  14%|█▍        | 90/625 [00:21<01:54,  4.69it/s]Model Responding:  15%|█▍        | 91/625 [00:21<01:51,  4.80it/s]Model Responding:  15%|█▍        | 92/625 [00:22<02:10,  4.09it/s]Model Responding:  15%|█▍        | 93/625 [00:22<02:02,  4.35it/s]Model Responding:  15%|█▌        | 94/625 [00:22<01:56,  4.56it/s]Model Responding:  15%|█▌        | 95/625 [00:22<01:52,  4.72it/s]Model Responding:  15%|█▌        | 96/625 [00:23<02:06,  4.19it/s]Model Responding:  16%|█▌        | 97/625 [00:23<02:03,  4.28it/s]Model Responding:  16%|█▌        | 98/625 [00:23<02:06,  4.16it/s]Model Responding:  16%|█▌        | 99/625 [00:23<02:03,  4.25it/s]Model Responding:  16%|█▌        | 100/625 [00:23<01:53,  4.64it/s]Model Responding:  16%|█▌        | 101/625 [00:24<01:45,  4.95it/s]Model Responding:  16%|█▋        | 102/625 [00:24<02:03,  4.23it/s]Model Responding:  16%|█▋        | 103/625 [00:24<02:05,  4.16it/s]Model Responding:  17%|█▋        | 104/625 [00:24<02:06,  4.11it/s]Model Responding:  17%|█▋        | 105/625 [00:25<02:03,  4.22it/s]Model Responding:  17%|█▋        | 106/625 [00:25<01:52,  4.61it/s]Model Responding:  17%|█▋        | 107/625 [00:25<01:49,  4.73it/s]Model Responding:  17%|█▋        | 108/625 [00:25<01:51,  4.64it/s]Model Responding:  17%|█▋        | 109/625 [00:26<02:04,  4.14it/s]Model Responding:  18%|█▊        | 110/625 [00:26<02:07,  4.04it/s]Model Responding:  18%|█▊        | 111/625 [00:26<02:35,  3.31it/s]Model Responding:  18%|█▊        | 112/625 [00:26<02:20,  3.65it/s]Model Responding:  18%|█▊        | 113/625 [00:27<02:09,  3.94it/s]Model Responding:  18%|█▊        | 114/625 [00:27<02:06,  4.02it/s]Model Responding:  18%|█▊        | 115/625 [00:27<02:00,  4.22it/s]Model Responding:  19%|█▊        | 116/625 [00:27<01:56,  4.36it/s]Model Responding:  19%|█▊        | 117/625 [00:28<02:05,  4.05it/s]Model Responding:  19%|█▉        | 118/625 [00:28<02:12,  3.83it/s]Model Responding:  19%|█▉        | 119/625 [00:28<02:12,  3.81it/s]Model Responding:  19%|█▉        | 120/625 [00:28<02:08,  3.92it/s]Model Responding:  19%|█▉        | 121/625 [00:29<02:01,  4.14it/s]Model Responding:  20%|█▉        | 122/625 [00:29<02:04,  4.03it/s]Model Responding:  20%|█▉        | 123/625 [00:29<01:54,  4.40it/s]Model Responding:  20%|█▉        | 124/625 [00:29<01:57,  4.28it/s]Model Responding:  20%|██        | 125/625 [00:29<01:47,  4.66it/s]Model Responding:  20%|██        | 126/625 [00:30<01:52,  4.43it/s]Model Responding:  20%|██        | 127/625 [00:30<01:52,  4.44it/s]Model Responding:  20%|██        | 128/625 [00:30<01:47,  4.61it/s]Model Responding:  21%|██        | 129/625 [00:30<01:48,  4.57it/s]Model Responding:  21%|██        | 130/625 [00:31<01:53,  4.38it/s]Model Responding:  21%|██        | 131/625 [00:31<01:52,  4.40it/s]Model Responding:  21%|██        | 132/625 [00:31<01:55,  4.28it/s]Model Responding:  21%|██▏       | 133/625 [00:31<01:57,  4.20it/s]Model Responding:  21%|██▏       | 134/625 [00:32<01:58,  4.14it/s]Model Responding:  22%|██▏       | 135/625 [00:32<02:00,  4.08it/s]Model Responding:  22%|██▏       | 136/625 [00:32<02:04,  3.91it/s]Model Responding:  22%|██▏       | 137/625 [00:32<01:56,  4.20it/s]Model Responding:  22%|██▏       | 138/625 [00:32<01:46,  4.59it/s]Model Responding:  22%|██▏       | 139/625 [00:33<01:59,  4.07it/s]Model Responding:  22%|██▏       | 140/625 [00:33<01:52,  4.33it/s]Model Responding:  23%|██▎       | 141/625 [00:33<01:54,  4.24it/s]Model Responding:  23%|██▎       | 142/625 [00:33<01:44,  4.63it/s]Model Responding:  23%|██▎       | 143/625 [00:34<01:49,  4.40it/s]Model Responding:  23%|██▎       | 144/625 [00:34<01:48,  4.42it/s]Model Responding:  23%|██▎       | 145/625 [00:34<01:52,  4.27it/s]Model Responding:  23%|██▎       | 146/625 [00:34<02:00,  3.98it/s]Model Responding:  24%|██▎       | 147/625 [00:35<01:52,  4.26it/s]Model Responding:  24%|██▎       | 148/625 [00:35<01:42,  4.63it/s]Model Responding:  24%|██▍       | 149/625 [00:35<01:51,  4.26it/s]Model Responding:  24%|██▍       | 150/625 [00:35<01:42,  4.64it/s]Model Responding:  24%|██▍       | 151/625 [00:35<01:43,  4.57it/s]Model Responding:  24%|██▍       | 152/625 [00:36<01:52,  4.20it/s]Model Responding:  24%|██▍       | 153/625 [00:36<01:39,  4.73it/s]Model Responding:  25%|██▍       | 154/625 [00:36<01:34,  4.97it/s]Model Responding:  25%|██▍       | 155/625 [00:36<01:37,  4.81it/s]Model Responding:  25%|██▍       | 156/625 [00:36<01:32,  5.08it/s]Model Responding:  25%|██▌       | 157/625 [00:37<01:39,  4.69it/s]Model Responding:  25%|██▌       | 158/625 [00:37<01:49,  4.26it/s]Model Responding:  25%|██▌       | 159/625 [00:37<01:47,  4.32it/s]Model Responding:  26%|██▌       | 160/625 [00:37<01:53,  4.08it/s]Model Responding:  26%|██▌       | 161/625 [00:38<01:54,  4.04it/s]Model Responding:  26%|██▌       | 162/625 [00:38<01:55,  4.03it/s]Model Responding:  26%|██▌       | 163/625 [00:38<01:43,  4.45it/s]Model Responding:  26%|██▌       | 164/625 [00:38<01:43,  4.45it/s]Model Responding:  26%|██▋       | 165/625 [00:39<01:46,  4.30it/s]Model Responding:  27%|██▋       | 166/625 [00:39<01:40,  4.59it/s]Model Responding:  27%|██▋       | 167/625 [00:39<01:39,  4.62it/s]Model Responding:  27%|██▋       | 168/625 [00:39<01:43,  4.41it/s]Model Responding:  27%|██▋       | 169/625 [00:39<01:42,  4.43it/s]Model Responding:  27%|██▋       | 170/625 [00:40<01:43,  4.39it/s]Model Responding:  27%|██▋       | 171/625 [00:40<01:38,  4.60it/s]Model Responding:  28%|██▊       | 172/625 [00:40<01:42,  4.40it/s]Model Responding:  28%|██▊       | 173/625 [00:40<01:35,  4.75it/s]Model Responding:  28%|██▊       | 174/625 [00:40<01:27,  5.18it/s]Model Responding:  28%|██▊       | 175/625 [00:41<01:27,  5.14it/s]Model Responding:  28%|██▊       | 176/625 [00:41<01:27,  5.13it/s]Model Responding:  28%|██▊       | 177/625 [00:41<01:27,  5.11it/s]Model Responding:  28%|██▊       | 178/625 [00:41<01:34,  4.72it/s]Model Responding:  29%|██▊       | 179/625 [00:42<01:28,  5.02it/s]Model Responding:  29%|██▉       | 180/625 [00:42<01:32,  4.83it/s]Model Responding:  29%|██▉       | 181/625 [00:42<01:33,  4.73it/s]Model Responding:  29%|██▉       | 182/625 [00:42<01:31,  4.83it/s]Model Responding:  29%|██▉       | 183/625 [00:42<01:32,  4.78it/s]Model Responding:  29%|██▉       | 184/625 [00:43<01:37,  4.51it/s]Model Responding:  30%|██▉       | 185/625 [00:43<01:34,  4.67it/s]Model Responding:  30%|██▉       | 186/625 [00:43<01:28,  4.97it/s]Model Responding:  30%|██▉       | 187/625 [00:43<01:20,  5.44it/s]Model Responding:  30%|███       | 188/625 [00:43<01:25,  5.11it/s]Model Responding:  30%|███       | 189/625 [00:44<01:23,  5.24it/s]Model Responding:  30%|███       | 190/625 [00:44<01:17,  5.61it/s]Model Responding:  31%|███       | 191/625 [00:44<01:16,  5.67it/s]Model Responding:  31%|███       | 192/625 [00:44<01:19,  5.46it/s]Model Responding:  31%|███       | 193/625 [00:44<01:27,  4.94it/s]Model Responding:  31%|███       | 194/625 [00:45<01:29,  4.79it/s]Model Responding:  31%|███       | 195/625 [00:45<01:25,  5.05it/s]Model Responding:  31%|███▏      | 196/625 [00:45<01:21,  5.27it/s]Model Responding:  32%|███▏      | 197/625 [00:45<01:25,  5.01it/s]Model Responding:  32%|███▏      | 198/625 [00:45<01:28,  4.84it/s]Model Responding:  32%|███▏      | 199/625 [00:46<01:30,  4.73it/s]Model Responding:  32%|███▏      | 200/625 [00:46<01:35,  4.47it/s]Model Responding:  32%|███▏      | 201/625 [00:46<01:41,  4.17it/s]Model Responding:  32%|███▏      | 202/625 [00:46<01:39,  4.26it/s]Model Responding:  32%|███▏      | 203/625 [00:47<01:41,  4.18it/s]Model Responding:  33%|███▎      | 204/625 [00:47<01:38,  4.26it/s]Model Responding:  33%|███▎      | 205/625 [00:47<01:33,  4.47it/s]Model Responding:  33%|███▎      | 206/625 [00:47<01:28,  4.72it/s]Model Responding:  33%|███▎      | 207/625 [00:47<01:26,  4.82it/s]Model Responding:  33%|███▎      | 208/625 [00:48<01:35,  4.38it/s]Model Responding:  33%|███▎      | 209/625 [00:48<01:44,  3.98it/s]Model Responding:  34%|███▎      | 210/625 [00:48<01:44,  3.97it/s]Model Responding:  34%|███▍      | 211/625 [00:48<01:34,  4.39it/s]Model Responding:  34%|███▍      | 212/625 [00:49<01:38,  4.18it/s]Model Responding:  34%|███▍      | 213/625 [00:49<01:40,  4.12it/s]Model Responding:  34%|███▍      | 214/625 [00:49<01:43,  3.95it/s]Model Responding:  34%|███▍      | 215/625 [00:49<01:33,  4.38it/s]Model Responding:  35%|███▍      | 216/625 [00:50<01:48,  3.77it/s]Model Responding:  35%|███▍      | 217/625 [00:50<01:39,  4.08it/s]Model Responding:  35%|███▍      | 218/625 [00:50<01:33,  4.35it/s]Model Responding:  35%|███▌      | 219/625 [00:50<01:40,  4.03it/s]Model Responding:  35%|███▌      | 220/625 [00:51<01:40,  4.02it/s]Model Responding:  35%|███▌      | 221/625 [00:51<01:34,  4.29it/s]Model Responding:  36%|███▌      | 222/625 [00:51<01:29,  4.50it/s]Model Responding:  36%|███▌      | 223/625 [00:51<01:35,  4.20it/s]Model Responding:  36%|███▌      | 224/625 [00:52<01:36,  4.14it/s]Model Responding:  36%|███▌      | 225/625 [00:52<01:33,  4.30it/s]Model Responding:  36%|███▌      | 226/625 [00:52<01:37,  4.08it/s]Model Responding:  36%|███▋      | 227/625 [00:52<01:28,  4.49it/s]Model Responding:  36%|███▋      | 228/625 [00:52<01:28,  4.48it/s]Model Responding:  37%|███▋      | 229/625 [00:53<01:25,  4.65it/s]Model Responding:  37%|███▋      | 230/625 [00:53<01:19,  4.96it/s]Model Responding:  37%|███▋      | 231/625 [00:53<01:25,  4.62it/s]Model Responding:  37%|███▋      | 232/625 [00:53<01:19,  4.94it/s]Model Responding:  37%|███▋      | 233/625 [00:53<01:12,  5.40it/s]Model Responding:  37%|███▋      | 234/625 [00:53<01:07,  5.80it/s]Model Responding:  38%|███▊      | 235/625 [00:54<01:03,  6.11it/s]Model Responding:  38%|███▊      | 236/625 [00:54<01:10,  5.50it/s]Model Responding:  38%|███▊      | 237/625 [00:54<01:09,  5.60it/s]Model Responding:  38%|███▊      | 238/625 [00:54<01:17,  4.99it/s]Model Responding:  38%|███▊      | 239/625 [00:55<01:22,  4.66it/s]Model Responding:  38%|███▊      | 240/625 [00:55<01:23,  4.60it/s]Model Responding:  39%|███▊      | 241/625 [00:55<01:24,  4.55it/s]Model Responding:  39%|███▊      | 242/625 [00:55<01:33,  4.09it/s]Model Responding:  39%|███▉      | 243/625 [00:55<01:28,  4.33it/s]Model Responding:  39%|███▉      | 244/625 [00:56<01:37,  3.92it/s]Model Responding:  39%|███▉      | 245/625 [00:56<01:41,  3.75it/s]Model Responding:  39%|███▉      | 246/625 [00:56<01:32,  4.11it/s]Model Responding:  40%|███▉      | 247/625 [00:56<01:23,  4.51it/s]Model Responding:  40%|███▉      | 248/625 [00:57<01:26,  4.34it/s]Model Responding:  40%|███▉      | 249/625 [00:57<01:29,  4.22it/s]Model Responding:  40%|████      | 250/625 [00:57<01:24,  4.45it/s]Model Responding:  40%|████      | 251/625 [00:57<01:19,  4.69it/s]Model Responding:  40%|████      | 252/625 [00:58<01:26,  4.31it/s]Model Responding:  40%|████      | 253/625 [00:58<01:28,  4.21it/s]Model Responding:  41%|████      | 254/625 [00:58<01:23,  4.43it/s]Model Responding:  41%|████      | 255/625 [00:58<01:17,  4.77it/s]Model Responding:  41%|████      | 256/625 [00:58<01:15,  4.86it/s]Model Responding:  41%|████      | 257/625 [00:59<01:14,  4.93it/s]Model Responding:  41%|████▏     | 258/625 [00:59<01:16,  4.78it/s]Model Responding:  41%|████▏     | 259/625 [00:59<01:18,  4.68it/s]Model Responding:  42%|████▏     | 260/625 [00:59<01:13,  4.99it/s]Model Responding:  42%|████▏     | 261/625 [00:59<01:15,  4.80it/s]Model Responding:  42%|████▏     | 262/625 [01:00<01:17,  4.69it/s]Model Responding:  42%|████▏     | 263/625 [01:00<01:15,  4.80it/s]Model Responding:  42%|████▏     | 264/625 [01:00<01:11,  5.04it/s]Model Responding:  42%|████▏     | 265/625 [01:00<01:05,  5.50it/s]Model Responding:  43%|████▎     | 266/625 [01:00<01:09,  5.15it/s]Model Responding:  43%|████▎     | 267/625 [01:01<01:12,  4.92it/s]Model Responding:  43%|████▎     | 268/625 [01:01<01:14,  4.78it/s]Model Responding:  43%|████▎     | 269/625 [01:01<01:16,  4.68it/s]Model Responding:  43%|████▎     | 270/625 [01:01<01:11,  4.98it/s]Model Responding:  43%|████▎     | 271/625 [01:01<01:13,  4.82it/s]Model Responding:  44%|████▎     | 272/625 [01:02<01:12,  4.89it/s]Model Responding:  44%|████▎     | 273/625 [01:02<01:16,  4.58it/s]Model Responding:  44%|████▍     | 274/625 [01:02<01:14,  4.71it/s]Model Responding:  44%|████▍     | 275/625 [01:02<01:21,  4.27it/s]Model Responding:  44%|████▍     | 276/625 [01:03<01:21,  4.31it/s]Model Responding:  44%|████▍     | 277/625 [01:03<01:17,  4.50it/s]Model Responding:  44%|████▍     | 278/625 [01:03<01:17,  4.49it/s]Model Responding:  45%|████▍     | 279/625 [01:03<01:14,  4.65it/s]Model Responding:  45%|████▍     | 280/625 [01:03<01:17,  4.42it/s]Model Responding:  45%|████▍     | 281/625 [01:04<01:17,  4.43it/s]Model Responding:  45%|████▌     | 282/625 [01:04<01:14,  4.60it/s]Model Responding:  45%|████▌     | 283/625 [01:04<01:12,  4.74it/s]Model Responding:  45%|████▌     | 284/625 [01:04<01:10,  4.83it/s]Model Responding:  46%|████▌     | 285/625 [01:05<01:14,  4.54it/s]Model Responding:  46%|████▌     | 286/625 [01:05<01:14,  4.52it/s]Model Responding:  46%|████▌     | 287/625 [01:05<01:07,  5.00it/s]Model Responding:  46%|████▌     | 288/625 [01:05<01:02,  5.40it/s]Model Responding:  46%|████▌     | 289/625 [01:05<00:58,  5.74it/s]Model Responding:  46%|████▋     | 290/625 [01:05<01:00,  5.52it/s]Model Responding:  47%|████▋     | 291/625 [01:06<00:59,  5.62it/s]Model Responding:  47%|████▋     | 292/625 [01:06<01:01,  5.44it/s]Model Responding:  47%|████▋     | 293/625 [01:06<00:56,  5.83it/s]Model Responding:  47%|████▋     | 294/625 [01:06<00:57,  5.81it/s]Model Responding:  47%|████▋     | 295/625 [01:06<00:56,  5.83it/s]Model Responding:  47%|████▋     | 296/625 [01:06<00:56,  5.79it/s]Model Responding:  48%|████▊     | 297/625 [01:07<01:01,  5.32it/s]Model Responding:  48%|████▊     | 298/625 [01:07<01:05,  5.00it/s]Model Responding:  48%|████▊     | 299/625 [01:07<01:21,  4.02it/s]Model Responding:  48%|████▊     | 300/625 [01:07<01:08,  4.74it/s]Model Responding:  48%|████▊     | 301/625 [01:08<01:07,  4.82it/s]Model Responding:  48%|████▊     | 302/625 [01:08<01:03,  5.09it/s]Model Responding:  48%|████▊     | 303/625 [01:08<01:05,  4.88it/s]Model Responding:  49%|████▊     | 304/625 [01:08<01:07,  4.74it/s]Model Responding:  49%|████▉     | 305/625 [01:09<01:14,  4.32it/s]Model Responding:  49%|████▉     | 306/625 [01:09<01:15,  4.22it/s]Model Responding:  49%|████▉     | 307/625 [01:09<01:06,  4.78it/s]Model Responding:  49%|████▉     | 308/625 [01:09<01:07,  4.67it/s]Model Responding:  49%|████▉     | 309/625 [01:09<01:16,  4.15it/s]Model Responding:  50%|████▉     | 310/625 [01:10<01:15,  4.19it/s]Model Responding:  50%|████▉     | 311/625 [01:10<01:06,  4.74it/s]Model Responding:  50%|████▉     | 312/625 [01:10<01:07,  4.65it/s]Model Responding:  50%|█████     | 313/625 [01:10<01:08,  4.56it/s]Model Responding:  50%|█████     | 314/625 [01:10<01:01,  5.07it/s]Model Responding:  50%|█████     | 315/625 [01:11<01:06,  4.69it/s]Model Responding:  51%|█████     | 316/625 [01:11<01:09,  4.45it/s]Model Responding:  51%|█████     | 317/625 [01:11<01:13,  4.16it/s]Model Responding:  51%|█████     | 318/625 [01:11<01:12,  4.25it/s]Model Responding:  51%|█████     | 319/625 [01:12<01:13,  4.17it/s]Model Responding:  51%|█████     | 320/625 [01:12<01:11,  4.26it/s]Model Responding:  51%|█████▏    | 321/625 [01:12<01:12,  4.18it/s]Model Responding:  52%|█████▏    | 322/625 [01:12<01:13,  4.12it/s]Model Responding:  52%|█████▏    | 323/625 [01:13<01:09,  4.37it/s]Model Responding:  52%|█████▏    | 324/625 [01:13<01:10,  4.25it/s]Model Responding:  52%|█████▏    | 325/625 [01:13<01:12,  4.17it/s]Model Responding:  52%|█████▏    | 326/625 [01:13<01:12,  4.11it/s]Model Responding:  52%|█████▏    | 327/625 [01:14<01:06,  4.51it/s]Model Responding:  52%|█████▏    | 328/625 [01:14<01:06,  4.49it/s]Model Responding:  53%|█████▎    | 329/625 [01:14<01:06,  4.48it/s]Model Responding:  53%|█████▎    | 330/625 [01:14<01:01,  4.81it/s]Model Responding:  53%|█████▎    | 331/625 [01:14<01:02,  4.70it/s]Model Responding:  53%|█████▎    | 332/625 [01:15<01:03,  4.62it/s]Model Responding:  53%|█████▎    | 333/625 [01:15<01:03,  4.56it/s]Model Responding:  53%|█████▎    | 334/625 [01:15<01:04,  4.52it/s]Model Responding:  54%|█████▎    | 335/625 [01:15<00:55,  5.22it/s]Model Responding:  54%|█████▍    | 336/625 [01:15<00:58,  4.93it/s]Model Responding:  54%|█████▍    | 337/625 [01:16<01:14,  3.88it/s]Model Responding:  54%|█████▍    | 338/625 [01:16<01:06,  4.29it/s]Model Responding:  54%|█████▍    | 339/625 [01:16<01:13,  3.91it/s]Model Responding:  54%|█████▍    | 340/625 [01:17<01:14,  3.82it/s]Model Responding:  55%|█████▍    | 341/625 [01:17<01:04,  4.41it/s]Model Responding:  55%|█████▍    | 342/625 [01:17<00:56,  4.98it/s]Model Responding:  55%|█████▍    | 343/625 [01:17<01:00,  4.63it/s]Model Responding:  55%|█████▌    | 344/625 [01:17<01:02,  4.48it/s]Model Responding:  55%|█████▌    | 345/625 [01:17<00:58,  4.80it/s]Model Responding:  55%|█████▌    | 346/625 [01:18<01:06,  4.23it/s]Model Responding:  56%|█████▌    | 347/625 [01:18<01:00,  4.62it/s]Model Responding:  56%|█████▌    | 348/625 [01:18<00:58,  4.75it/s]Model Responding:  56%|█████▌    | 349/625 [01:18<00:59,  4.64it/s]Model Responding:  56%|█████▌    | 350/625 [01:19<00:55,  4.92it/s]Model Responding:  56%|█████▌    | 351/625 [01:19<00:57,  4.76it/s]Model Responding:  56%|█████▋    | 352/625 [01:19<00:56,  4.83it/s]Model Responding:  56%|█████▋    | 353/625 [01:19<00:49,  5.50it/s]Model Responding:  57%|█████▋    | 354/625 [01:19<00:52,  5.16it/s]Model Responding:  57%|█████▋    | 355/625 [01:19<00:48,  5.56it/s]Model Responding:  57%|█████▋    | 356/625 [01:20<00:43,  6.14it/s]Model Responding:  57%|█████▋    | 357/625 [01:20<00:44,  6.06it/s]Model Responding:  57%|█████▋    | 358/625 [01:20<00:44,  5.99it/s]Model Responding:  57%|█████▋    | 359/625 [01:20<00:40,  6.52it/s]Model Responding:  58%|█████▊    | 360/625 [01:20<00:44,  6.01it/s]Model Responding:  58%|█████▊    | 361/625 [01:20<00:48,  5.46it/s]Model Responding:  58%|█████▊    | 362/625 [01:21<00:51,  5.12it/s]Model Responding:  58%|█████▊    | 363/625 [01:21<00:51,  5.10it/s]Model Responding:  58%|█████▊    | 364/625 [01:21<00:51,  5.10it/s]Model Responding:  58%|█████▊    | 365/625 [01:21<00:56,  4.59it/s]Model Responding:  59%|█████▊    | 366/625 [01:22<00:55,  4.68it/s]Model Responding:  59%|█████▊    | 367/625 [01:22<00:59,  4.31it/s]Model Responding:  59%|█████▉    | 368/625 [01:22<01:05,  3.95it/s]Model Responding:  59%|█████▉    | 369/625 [01:22<01:04,  3.97it/s]Model Responding:  59%|█████▉    | 370/625 [01:23<01:04,  3.98it/s]Model Responding:  59%|█████▉    | 371/625 [01:23<01:03,  3.99it/s]Model Responding:  60%|█████▉    | 372/625 [01:23<01:01,  4.13it/s]Model Responding:  60%|█████▉    | 373/625 [01:23<00:56,  4.44it/s]Model Responding:  60%|█████▉    | 374/625 [01:23<00:52,  4.81it/s]Model Responding:  60%|██████    | 375/625 [01:24<00:51,  4.87it/s]Model Responding:  60%|██████    | 376/625 [01:24<00:52,  4.74it/s]Model Responding:  60%|██████    | 377/625 [01:24<01:00,  4.07it/s]Model Responding:  60%|██████    | 378/625 [01:24<00:54,  4.51it/s]Model Responding:  61%|██████    | 379/625 [01:25<00:54,  4.51it/s]Model Responding:  61%|██████    | 380/625 [01:25<00:52,  4.66it/s]Model Responding:  61%|██████    | 381/625 [01:25<00:47,  5.16it/s]Model Responding:  61%|██████    | 382/625 [01:25<00:43,  5.56it/s]Model Responding:  61%|██████▏   | 383/625 [01:25<00:40,  5.92it/s]Model Responding:  61%|██████▏   | 384/625 [01:25<00:44,  5.41it/s]Model Responding:  62%|██████▏   | 385/625 [01:26<00:47,  5.08it/s]Model Responding:  62%|██████▏   | 386/625 [01:26<00:50,  4.70it/s]Model Responding:  62%|██████▏   | 387/625 [01:26<00:45,  5.22it/s]Model Responding:  62%|██████▏   | 388/625 [01:26<00:41,  5.67it/s]Model Responding:  62%|██████▏   | 389/625 [01:26<00:44,  5.26it/s]Model Responding:  62%|██████▏   | 390/625 [01:27<00:43,  5.38it/s]Model Responding:  63%|██████▎   | 391/625 [01:27<00:46,  5.07it/s]Model Responding:  63%|██████▎   | 392/625 [01:27<00:44,  5.24it/s]Model Responding:  63%|██████▎   | 393/625 [01:27<00:50,  4.61it/s]Model Responding:  63%|██████▎   | 394/625 [01:27<00:46,  4.92it/s]Model Responding:  63%|██████▎   | 395/625 [01:28<00:47,  4.86it/s]Model Responding:  63%|██████▎   | 396/625 [01:28<00:44,  5.12it/s]Model Responding:  64%|██████▎   | 397/625 [01:28<00:46,  4.89it/s]Model Responding:  64%|██████▎   | 398/625 [01:28<00:47,  4.75it/s]Model Responding:  64%|██████▍   | 399/625 [01:28<00:43,  5.22it/s]Model Responding:  64%|██████▍   | 400/625 [01:29<00:54,  4.14it/s]Model Responding:  64%|██████▍   | 401/625 [01:29<00:52,  4.24it/s]Model Responding:  64%|██████▍   | 402/625 [01:29<00:51,  4.30it/s]Model Responding:  64%|██████▍   | 403/625 [01:29<00:52,  4.20it/s]Model Responding:  65%|██████▍   | 404/625 [01:30<00:50,  4.40it/s]Model Responding:  65%|██████▍   | 405/625 [01:30<00:44,  4.93it/s]Model Responding:  65%|██████▍   | 406/625 [01:30<00:47,  4.64it/s]Model Responding:  65%|██████▌   | 407/625 [01:30<00:47,  4.55it/s]Model Responding:  65%|██████▌   | 408/625 [01:31<00:46,  4.70it/s]Model Responding:  65%|██████▌   | 409/625 [01:31<00:51,  4.23it/s]Model Responding:  66%|██████▌   | 410/625 [01:31<00:45,  4.77it/s]Model Responding:  66%|██████▌   | 411/625 [01:31<00:39,  5.48it/s]Model Responding:  66%|██████▌   | 412/625 [01:31<00:38,  5.54it/s]Model Responding:  66%|██████▌   | 413/625 [01:31<00:39,  5.42it/s]Model Responding:  66%|██████▌   | 414/625 [01:32<00:36,  5.82it/s]Model Responding:  66%|██████▋   | 415/625 [01:32<00:36,  5.83it/s]Model Responding:  67%|██████▋   | 416/625 [01:32<00:35,  5.96it/s]Model Responding:  67%|██████▋   | 417/625 [01:32<00:40,  5.20it/s]Model Responding:  67%|██████▋   | 418/625 [01:32<00:43,  4.74it/s]Model Responding:  67%|██████▋   | 419/625 [01:33<00:46,  4.45it/s]Model Responding:  67%|██████▋   | 420/625 [01:33<00:42,  4.86it/s]Model Responding:  67%|██████▋   | 421/625 [01:33<00:48,  4.20it/s]Model Responding:  68%|██████▊   | 422/625 [01:33<00:43,  4.64it/s]Model Responding:  68%|██████▊   | 423/625 [01:33<00:41,  4.82it/s]Model Responding:  68%|██████▊   | 424/625 [01:34<00:39,  5.14it/s]Model Responding:  68%|██████▊   | 425/625 [01:34<00:40,  4.93it/s]Model Responding:  68%|██████▊   | 426/625 [01:34<00:43,  4.59it/s]Model Responding:  68%|██████▊   | 427/625 [01:34<00:41,  4.77it/s]Model Responding:  68%|██████▊   | 428/625 [01:35<00:40,  4.91it/s]Model Responding:  69%|██████▊   | 429/625 [01:35<00:37,  5.20it/s]Model Responding:  69%|██████▉   | 430/625 [01:35<00:42,  4.55it/s]Model Responding:  69%|██████▉   | 431/625 [01:35<00:40,  4.76it/s]Model Responding:  69%|██████▉   | 432/625 [01:36<00:52,  3.71it/s]Model Responding:  69%|██████▉   | 433/625 [01:36<00:47,  4.07it/s]Model Responding:  69%|██████▉   | 434/625 [01:36<00:43,  4.36it/s]Model Responding:  70%|██████▉   | 435/625 [01:36<00:46,  4.07it/s]Model Responding:  70%|██████▉   | 436/625 [01:36<00:41,  4.53it/s]Model Responding:  70%|██████▉   | 437/625 [01:37<00:38,  4.88it/s]Model Responding:  70%|███████   | 438/625 [01:37<00:42,  4.45it/s]Model Responding:  70%|███████   | 439/625 [01:37<00:38,  4.80it/s]Model Responding:  70%|███████   | 440/625 [01:37<00:38,  4.84it/s]Model Responding:  71%|███████   | 441/625 [01:37<00:36,  5.02it/s]Model Responding:  71%|███████   | 442/625 [01:38<00:38,  4.81it/s]Model Responding:  71%|███████   | 443/625 [01:38<00:37,  4.89it/s]Model Responding:  71%|███████   | 444/625 [01:38<00:35,  5.15it/s]Model Responding:  71%|███████   | 445/625 [01:38<00:33,  5.35it/s]Model Responding:  71%|███████▏  | 446/625 [01:38<00:32,  5.45it/s]Model Responding:  72%|███████▏  | 447/625 [01:39<00:36,  4.85it/s]Model Responding:  72%|███████▏  | 448/625 [01:39<00:33,  5.31it/s]Model Responding:  72%|███████▏  | 449/625 [01:39<00:31,  5.66it/s]Model Responding:  72%|███████▏  | 450/625 [01:39<00:29,  6.00it/s]Model Responding:  72%|███████▏  | 451/625 [01:39<00:28,  6.20it/s]Model Responding:  72%|███████▏  | 452/625 [01:39<00:27,  6.40it/s]Model Responding:  72%|███████▏  | 453/625 [01:40<00:33,  5.20it/s]Model Responding:  73%|███████▎  | 454/625 [01:40<00:34,  4.94it/s]Model Responding:  73%|███████▎  | 455/625 [01:40<00:30,  5.62it/s]Model Responding:  73%|███████▎  | 456/625 [01:40<00:30,  5.45it/s]Model Responding:  73%|███████▎  | 457/625 [01:40<00:29,  5.79it/s]Model Responding:  73%|███████▎  | 458/625 [01:40<00:28,  5.81it/s]Model Responding:  73%|███████▎  | 459/625 [01:41<00:31,  5.33it/s]Model Responding:  74%|███████▎  | 460/625 [01:41<00:32,  5.03it/s]Model Responding:  74%|███████▍  | 461/625 [01:41<00:32,  5.05it/s]Model Responding:  74%|███████▍  | 462/625 [01:41<00:33,  4.86it/s]Model Responding:  74%|███████▍  | 463/625 [01:42<00:31,  5.07it/s]Model Responding:  74%|███████▍  | 464/625 [01:42<00:29,  5.47it/s]Model Responding:  74%|███████▍  | 465/625 [01:42<00:29,  5.51it/s]Model Responding:  75%|███████▍  | 466/625 [01:42<00:27,  5.75it/s]Model Responding:  75%|███████▍  | 467/625 [01:42<00:26,  6.01it/s]Model Responding:  75%|███████▍  | 468/625 [01:42<00:26,  5.90it/s]Model Responding:  75%|███████▌  | 469/625 [01:42<00:26,  5.81it/s]Model Responding:  75%|███████▌  | 470/625 [01:43<00:27,  5.57it/s]Model Responding:  75%|███████▌  | 471/625 [01:43<00:27,  5.54it/s]Model Responding:  76%|███████▌  | 472/625 [01:43<00:29,  5.16it/s]Model Responding:  76%|███████▌  | 473/625 [01:43<00:30,  4.93it/s]Model Responding:  76%|███████▌  | 474/625 [01:43<00:28,  5.37it/s]Model Responding:  76%|███████▌  | 475/625 [01:44<00:30,  4.88it/s]Model Responding:  76%|███████▌  | 476/625 [01:44<00:28,  5.32it/s]Model Responding:  76%|███████▋  | 477/625 [01:44<00:30,  4.85it/s]Model Responding:  76%|███████▋  | 478/625 [01:44<00:27,  5.30it/s]Model Responding:  77%|███████▋  | 479/625 [01:44<00:25,  5.66it/s]Model Responding:  77%|███████▋  | 480/625 [01:45<00:24,  5.96it/s]Model Responding:  77%|███████▋  | 481/625 [01:45<00:25,  5.66it/s]Model Responding:  77%|███████▋  | 482/625 [01:45<00:29,  4.83it/s]Model Responding:  77%|███████▋  | 483/625 [01:45<00:28,  4.96it/s]Model Responding:  77%|███████▋  | 484/625 [01:45<00:26,  5.39it/s]Model Responding:  78%|███████▊  | 485/625 [01:46<00:25,  5.48it/s]Model Responding:  78%|███████▊  | 486/625 [01:46<00:26,  5.30it/s]Model Responding:  78%|███████▊  | 487/625 [01:46<00:25,  5.41it/s]Model Responding:  78%|███████▊  | 488/625 [01:46<00:24,  5.50it/s]Model Responding:  78%|███████▊  | 489/625 [01:46<00:26,  5.14it/s]Model Responding:  78%|███████▊  | 490/625 [01:46<00:25,  5.35it/s]Model Responding:  79%|███████▊  | 491/625 [01:47<00:23,  5.70it/s]Model Responding:  79%|███████▊  | 492/625 [01:47<00:21,  6.07it/s]Model Responding:  79%|███████▉  | 493/625 [01:47<00:24,  5.28it/s]Model Responding:  79%|███████▉  | 494/625 [01:47<00:24,  5.34it/s]Model Responding:  79%|███████▉  | 495/625 [01:47<00:22,  5.74it/s]Model Responding:  79%|███████▉  | 496/625 [01:48<00:21,  5.96it/s]Model Responding:  80%|███████▉  | 497/625 [01:48<00:20,  6.16it/s]Model Responding:  80%|███████▉  | 498/625 [01:48<00:20,  6.33it/s]Model Responding:  80%|███████▉  | 499/625 [01:48<00:19,  6.43it/s]Model Responding:  80%|████████  | 500/625 [01:48<00:19,  6.53it/s]Model Responding:  80%|████████  | 501/625 [01:48<00:19,  6.32it/s]Model Responding:  80%|████████  | 502/625 [01:48<00:18,  6.51it/s]Model Responding:  80%|████████  | 503/625 [01:49<00:18,  6.58it/s]Model Responding:  81%|████████  | 504/625 [01:49<00:19,  6.35it/s]Model Responding:  81%|████████  | 505/625 [01:49<00:20,  5.77it/s]Model Responding:  81%|████████  | 506/625 [01:49<00:23,  5.10it/s]Model Responding:  81%|████████  | 507/625 [01:49<00:21,  5.59it/s]Model Responding:  81%|████████▏ | 508/625 [01:50<00:20,  5.63it/s]Model Responding:  81%|████████▏ | 509/625 [01:50<00:22,  5.19it/s]Model Responding:  82%|████████▏ | 510/625 [01:50<00:21,  5.32it/s]Model Responding:  82%|████████▏ | 511/625 [01:50<00:22,  5.03it/s]Model Responding:  82%|████████▏ | 512/625 [01:50<00:20,  5.44it/s]Model Responding:  82%|████████▏ | 513/625 [01:50<00:20,  5.54it/s]Model Responding:  82%|████████▏ | 514/625 [01:51<00:19,  5.64it/s]Model Responding:  82%|████████▏ | 515/625 [01:51<00:21,  5.02it/s]Model Responding:  83%|████████▎ | 516/625 [01:51<00:20,  5.43it/s]Model Responding:  83%|████████▎ | 517/625 [01:51<00:19,  5.56it/s]Model Responding:  83%|████████▎ | 518/625 [01:51<00:20,  5.14it/s]Model Responding:  83%|████████▎ | 519/625 [01:52<00:21,  4.88it/s]Model Responding:  83%|████████▎ | 520/625 [01:52<00:19,  5.34it/s]Model Responding:  83%|████████▎ | 521/625 [01:52<00:20,  5.08it/s]Model Responding:  84%|████████▎ | 522/625 [01:52<00:21,  4.89it/s]Model Responding:  84%|████████▎ | 523/625 [01:52<00:19,  5.36it/s]Model Responding:  84%|████████▍ | 524/625 [01:53<00:17,  5.75it/s]Model Responding:  84%|████████▍ | 525/625 [01:53<00:17,  5.78it/s]Model Responding:  84%|████████▍ | 526/625 [01:53<00:16,  6.05it/s]Model Responding:  84%|████████▍ | 527/625 [01:53<00:15,  6.26it/s]Model Responding:  84%|████████▍ | 528/625 [01:53<00:17,  5.59it/s]Model Responding:  85%|████████▍ | 529/625 [01:53<00:16,  5.91it/s]Model Responding:  85%|████████▍ | 530/625 [01:54<00:17,  5.40it/s]Model Responding:  85%|████████▍ | 531/625 [01:54<00:18,  5.08it/s]Model Responding:  85%|████████▌ | 532/625 [01:54<00:17,  5.29it/s]Model Responding:  85%|████████▌ | 533/625 [01:54<00:20,  4.39it/s]Model Responding:  85%|████████▌ | 534/625 [01:55<00:20,  4.38it/s]Model Responding:  86%|████████▌ | 535/625 [01:55<00:18,  4.89it/s]Model Responding:  86%|████████▌ | 536/625 [01:55<00:16,  5.36it/s]Model Responding:  86%|████████▌ | 537/625 [01:55<00:15,  5.54it/s]Model Responding:  86%|████████▌ | 538/625 [01:55<00:14,  5.92it/s]Model Responding:  86%|████████▌ | 539/625 [01:55<00:14,  5.85it/s]Model Responding:  86%|████████▋ | 540/625 [01:55<00:14,  5.80it/s]Model Responding:  87%|████████▋ | 541/625 [01:56<00:14,  5.76it/s]Model Responding:  87%|████████▋ | 542/625 [01:56<00:18,  4.50it/s]Model Responding:  87%|████████▋ | 543/625 [01:56<00:18,  4.48it/s]Model Responding:  87%|████████▋ | 544/625 [01:56<00:16,  4.81it/s]Model Responding:  87%|████████▋ | 545/625 [01:57<00:20,  3.95it/s]Model Responding:  87%|████████▋ | 546/625 [01:57<00:18,  4.35it/s]Model Responding:  88%|████████▊ | 547/625 [01:57<00:17,  4.37it/s]Model Responding:  88%|████████▊ | 548/625 [01:57<00:17,  4.39it/s]Model Responding:  88%|████████▊ | 549/625 [01:58<00:17,  4.40it/s]Model Responding:  88%|████████▊ | 550/625 [01:58<00:17,  4.39it/s]Model Responding:  88%|████████▊ | 551/625 [01:58<00:14,  4.96it/s]Model Responding:  88%|████████▊ | 552/625 [01:58<00:14,  5.19it/s]Model Responding:  88%|████████▊ | 553/625 [01:58<00:13,  5.15it/s]Model Responding:  89%|████████▊ | 554/625 [01:58<00:12,  5.57it/s]Model Responding:  89%|████████▉ | 555/625 [01:59<00:12,  5.73it/s]Model Responding:  89%|████████▉ | 556/625 [01:59<00:12,  5.72it/s]Model Responding:  89%|████████▉ | 557/625 [01:59<00:11,  5.81it/s]Model Responding:  89%|████████▉ | 558/625 [01:59<00:13,  5.09it/s]Model Responding:  89%|████████▉ | 559/625 [02:00<00:15,  4.20it/s]Model Responding:  90%|████████▉ | 560/625 [02:00<00:14,  4.61it/s]Model Responding:  90%|████████▉ | 561/625 [02:00<00:12,  5.12it/s]Model Responding:  90%|████████▉ | 562/625 [02:00<00:12,  4.87it/s]Model Responding:  90%|█████████ | 563/625 [02:00<00:11,  5.33it/s]Model Responding:  90%|█████████ | 564/625 [02:00<00:11,  5.26it/s]Model Responding:  90%|█████████ | 565/625 [02:01<00:11,  5.39it/s]Model Responding:  91%|█████████ | 566/625 [02:01<00:11,  5.24it/s]Model Responding:  91%|█████████ | 567/625 [02:01<00:10,  5.37it/s]Model Responding:  91%|█████████ | 568/625 [02:01<00:10,  5.45it/s]Model Responding:  91%|█████████ | 569/625 [02:01<00:10,  5.14it/s]Model Responding:  91%|█████████ | 570/625 [02:02<00:16,  3.41it/s]Model Responding:  91%|█████████▏| 571/625 [02:02<00:15,  3.45it/s]Model Responding:  92%|█████████▏| 572/625 [02:02<00:14,  3.68it/s]Model Responding:  92%|█████████▏| 573/625 [02:03<00:13,  3.86it/s]Model Responding:  92%|█████████▏| 574/625 [02:03<00:11,  4.29it/s]Model Responding:  92%|█████████▏| 575/625 [02:03<00:10,  4.64it/s]Model Responding:  92%|█████████▏| 576/625 [02:03<00:09,  5.13it/s]Model Responding:  92%|█████████▏| 577/625 [02:03<00:09,  4.91it/s]Model Responding:  92%|█████████▏| 578/625 [02:04<00:09,  5.15it/s]Model Responding:  93%|█████████▎| 579/625 [02:04<00:07,  5.82it/s]Model Responding:  93%|█████████▎| 580/625 [02:04<00:08,  5.28it/s]Model Responding:  93%|█████████▎| 581/625 [02:04<00:08,  4.97it/s]Model Responding:  93%|█████████▎| 582/625 [02:04<00:07,  5.41it/s]Model Responding:  93%|█████████▎| 583/625 [02:05<00:08,  5.05it/s]Model Responding:  93%|█████████▎| 584/625 [02:05<00:07,  5.28it/s]Model Responding:  94%|█████████▎| 585/625 [02:05<00:06,  5.93it/s]Model Responding:  94%|█████████▍| 586/625 [02:05<00:06,  5.85it/s]Model Responding:  94%|█████████▍| 587/625 [02:05<00:06,  5.76it/s]Model Responding:  94%|█████████▍| 588/625 [02:05<00:06,  5.48it/s]Model Responding:  94%|█████████▍| 589/625 [02:06<00:06,  5.90it/s]Model Responding:  94%|█████████▍| 590/625 [02:06<00:06,  5.63it/s]Model Responding:  95%|█████████▍| 591/625 [02:06<00:06,  5.23it/s]Model Responding:  95%|█████████▍| 592/625 [02:06<00:06,  4.98it/s]Model Responding:  95%|█████████▍| 593/625 [02:06<00:06,  5.00it/s]Model Responding:  95%|█████████▌| 594/625 [02:07<00:06,  5.03it/s]Model Responding:  95%|█████████▌| 595/625 [02:07<00:05,  5.49it/s]Model Responding:  95%|█████████▌| 596/625 [02:07<00:04,  5.86it/s]Model Responding:  96%|█████████▌| 597/625 [02:07<00:04,  5.86it/s]Model Responding:  96%|█████████▌| 598/625 [02:07<00:04,  5.54it/s]Model Responding:  96%|█████████▌| 599/625 [02:07<00:04,  5.68it/s]Model Responding:  96%|█████████▌| 600/625 [02:08<00:04,  5.03it/s]Model Responding:  96%|█████████▌| 601/625 [02:08<00:04,  5.43it/s]Model Responding:  96%|█████████▋| 602/625 [02:08<00:04,  5.10it/s]Model Responding:  96%|█████████▋| 603/625 [02:08<00:04,  4.86it/s]Model Responding:  97%|█████████▋| 604/625 [02:08<00:03,  5.31it/s]Model Responding:  97%|█████████▋| 605/625 [02:09<00:03,  5.16it/s]Model Responding:  97%|█████████▋| 606/625 [02:09<00:03,  5.11it/s]Model Responding:  97%|█████████▋| 607/625 [02:09<00:03,  4.89it/s]Model Responding:  97%|█████████▋| 608/625 [02:09<00:03,  4.90it/s]Model Responding:  97%|█████████▋| 609/625 [02:09<00:02,  5.57it/s]Model Responding:  98%|█████████▊| 610/625 [02:10<00:02,  5.19it/s]Model Responding:  98%|█████████▊| 611/625 [02:10<00:02,  5.63it/s]Model Responding:  98%|█████████▊| 612/625 [02:10<00:02,  5.95it/s]Model Responding:  98%|█████████▊| 613/625 [02:10<00:03,  3.66it/s]Model Responding:  98%|█████████▊| 614/625 [02:11<00:02,  4.15it/s]Model Responding:  98%|█████████▊| 615/625 [02:11<00:02,  4.24it/s]Model Responding:  99%|█████████▊| 616/625 [02:11<00:02,  4.28it/s]Model Responding:  99%|█████████▊| 617/625 [02:11<00:01,  4.31it/s]Model Responding:  99%|█████████▉| 618/625 [02:11<00:01,  4.68it/s]Model Responding:  99%|█████████▉| 619/625 [02:12<00:01,  5.19it/s]Model Responding:  99%|█████████▉| 620/625 [02:12<00:01,  4.44it/s]Model Responding:  99%|█████████▉| 621/625 [02:12<00:00,  4.61it/s]Model Responding: 100%|█████████▉| 622/625 [02:12<00:00,  4.88it/s]Model Responding: 100%|█████████▉| 623/625 [02:12<00:00,  4.90it/s]Model Responding: 100%|█████████▉| 624/625 [02:13<00:00,  5.37it/s]Model Responding: 100%|██████████| 625/625 [02:13<00:00,  5.52it/s]Model Responding: 100%|██████████| 625/625 [02:13<00:00,  4.69it/s]
+Generated Iutput Average 634.2224 tokens ===========
+Generated Output Average 4.3696 tokens
+Generated Iutput Average 640.952 tokens ===========
+Generated Output Average 4.3632 tokens
+Generated Iutput Average 641.7136 tokens ===========
+Generated Output Average 4.4784 tokens
+Generated Iutput Average 645.5984 tokens ===========
+Generated Output Average 4.576 tokens
+Postprocessing:   0%|          | 0/625 [00:00<?, ?it/s]Postprocessing: 100%|██████████| 625/625 [00:00<00:00, 9681.86it/s]
+[32m2026-07-07 12:53:47.599[0m | [1mINFO    [0m | [36mlmms_eval.loggers.evaluation_tracker[0m:[36msave_results_aggregated[0m:[36m188[0m - [1mSaving results aggregated[0m
+[32m2026-07-07 12:53:47.600[0m | [1mINFO    [0m | [36mlmms_eval.loggers.evaluation_tracker[0m:[36msave_results_samples[0m:[36m255[0m - [1mSaving per-sample results for: chartqa[0m
+qwen2_5_vl_with_token_compression (pretrained=../output_ckpt/VisionSelector-Qwen2.5-VL-3B,method=selector,budgets=0.2,attn_implementation=flash_attention_2), gen_kwargs: (), limit: None, num_fewshot: None, batch_size: 1
+| Tasks |Version|Filter|n-shot|        Metric         |   |Value|   |Stderr|
+|-------|-------|------|-----:|-----------------------|---|----:|---|-----:|
+|chartqa|Yaml   |none  |     0|relaxed_augmented_split|↑  |0.900|±  |0.0085|
+|chartqa|Yaml   |none  |     0|relaxed_human_split    |↑  |0.568|±  |0.0140|
+|chartqa|Yaml   |none  |     0|relaxed_overall        |↑  |0.734|±  |0.0088|
+
++ [[ false == \t\r\u\e ]]
++ for TASK in "${TASKS[@]}"
++ for METHOD_CONFIG in "${METHODS[@]}"
+++ echo 'selector 3b attn_implementation=flash_attention_2'
+++ awk '{print $1}'
++ METHOD=selector
+++ echo 'selector 3b attn_implementation=flash_attention_2'
+++ awk '{print $2}'
++ FILENAME=3b
+++ echo 'selector 3b attn_implementation=flash_attention_2'
+++ awk '{$1="";$2=""; print $0}'
+++ xargs
++ ADDITIONAL_ARGS=attn_implementation=flash_attention_2
++ for BUDGET in "${BUDGETS[@]}"
++ OUTPUT_PATH=./result/eval_time/textvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b
++ LOG_FILE=./result/eval_time/textvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b/log_time.log
++ compgen -G './result/eval_time/textvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b/*results*.json'
++ '[' -d ./result/eval_time/textvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b ']'
++ mkdir -p ./result/eval_time/textvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b
++ MODEL_ARGS=pretrained=../output_ckpt/VisionSelector-Qwen2.5-VL-3B,method=selector,budgets=0.2,attn_implementation=flash_attention_2
++ COMMAND='EVAL_TIME=False CUDA_VISIBLE_DEVICES=0,1,2,3 python3 -m accelerate.commands.launch     --main_process_port=0     --mixed_precision=bf16     --num_processes=4     -m lmms_eval     --model qwen2_5_vl_with_token_compression     --batch_size 1     --log_samples --tasks textvqa_val --output_path ./result/eval_time/textvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b --log_samples_suffix textvqa_val --model_args "pretrained=../output_ckpt/VisionSelector-Qwen2.5-VL-3B,method=selector,budgets=0.2,attn_implementation=flash_attention_2"'
++ tee ./result/eval_time/textvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b/log_time.log
++ eval 'EVAL_TIME=False CUDA_VISIBLE_DEVICES=0,1,2,3 python3 -m accelerate.commands.launch     --main_process_port=0     --mixed_precision=bf16     --num_processes=4     -m lmms_eval     --model qwen2_5_vl_with_token_compression     --batch_size 1     --log_samples --tasks textvqa_val --output_path ./result/eval_time/textvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b --log_samples_suffix textvqa_val --model_args "pretrained=../output_ckpt/VisionSelector-Qwen2.5-VL-3B,method=selector,budgets=0.2,attn_implementation=flash_attention_2"'
+++ EVAL_TIME=False
+++ CUDA_VISIBLE_DEVICES=0,1,2,3
+++ python3 -m accelerate.commands.launch --main_process_port=0 --mixed_precision=bf16 --num_processes=4 -m lmms_eval --model qwen2_5_vl_with_token_compression --batch_size 1 --log_samples --tasks textvqa_val --output_path ./result/eval_time/textvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b --log_samples_suffix textvqa_val --model_args pretrained=../output_ckpt/VisionSelector-Qwen2.5-VL-3B,method=selector,budgets=0.2,attn_implementation=flash_attention_2
+The following values were not passed to `accelerate launch` and had defaults used instead:
+		More than one GPU was found, enabling multi-GPU training.
+		If this was unintended please pass in `--num_processes=1`.
+	`--num_machines` was set to a value of `1`
+	`--dynamo_backend` was set to a value of `'no'`
+To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
+Error.  nthreads cannot be larger than environment variable "NUMEXPR_MAX_THREADS" (64)Error.  nthreads cannot be larger than environment variable "NUMEXPR_MAX_THREADS" (64)Error.  nthreads cannot be larger than environment variable "NUMEXPR_MAX_THREADS" (64)Error.  nthreads cannot be larger than environment variable "NUMEXPR_MAX_THREADS" (64)[32m2026-07-07 12:53:57.581[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate[0m:[36m296[0m - [1mVerbosity set to INFO[0m
+[32m2026-07-07 12:53:57.854[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate[0m:[36m296[0m - [1mVerbosity set to INFO[0m
+[32m2026-07-07 12:53:57.855[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate[0m:[36m296[0m - [1mVerbosity set to INFO[0m
+[32m2026-07-07 12:53:57.857[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate[0m:[36m296[0m - [1mVerbosity set to INFO[0m
+[RANK 0] Detected kernel version 4.18.0, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
+[32m2026-07-07 12:53:59.251[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m386[0m - [1mEvaluation tracker args: {'output_path': './result/eval_time/textvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b'}[0m
+[32m2026-07-07 12:53:59.251[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m475[0m - [1mSelected Tasks: ['textvqa_val'][0m
+[32m2026-07-07 12:53:59.253[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36msimple_evaluate[0m:[36m158[0m - [1mSetting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234[0m
+[32m2026-07-07 12:53:59.559[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m386[0m - [1mEvaluation tracker args: {'output_path': './result/eval_time/textvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b'}[0m
+[32m2026-07-07 12:53:59.560[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m475[0m - [1mSelected Tasks: ['textvqa_val'][0m
+[32m2026-07-07 12:53:59.561[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36msimple_evaluate[0m:[36m158[0m - [1mSetting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234[0m
+[32m2026-07-07 12:53:59.565[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m386[0m - [1mEvaluation tracker args: {'output_path': './result/eval_time/textvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b'}[0m
+[32m2026-07-07 12:53:59.565[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m475[0m - [1mSelected Tasks: ['textvqa_val'][0m
+[32m2026-07-07 12:53:59.567[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36msimple_evaluate[0m:[36m158[0m - [1mSetting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234[0m
+[32m2026-07-07 12:53:59.602[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m386[0m - [1mEvaluation tracker args: {'output_path': './result/eval_time/textvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b'}[0m
+[32m2026-07-07 12:53:59.602[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m475[0m - [1mSelected Tasks: ['textvqa_val'][0m
+[32m2026-07-07 12:53:59.603[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36msimple_evaluate[0m:[36m158[0m - [1mSetting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234[0m
+multiprocessing.pool.RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/multiprocessing/pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/multiprocessing/pool.py", line 48, in mapstar
+    return list(map(*args))
+           ^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/utils/py_utils.py", line 407, in _single_map_nested
+    mapped = [_single_map_nested((function, v, batched, batch_size, types, None, True, None)) for v in pbar]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/utils/py_utils.py", line 388, in _single_map_nested
+    return [mapped_item for batch in iter_batched(data_struct, batch_size) for mapped_item in function(batch)]
+                                                                                              ^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/download/download_manager.py", line 220, in _download_batched
+    self._download_single(url_or_filename, download_config=download_config)
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/download/download_manager.py", line 229, in _download_single
+    out = cached_path(url_or_filename, download_config=download_config)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/utils/file_utils.py", line 188, in cached_path
+    ).hf_hub_download(
+      ^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/huggingface_hub/hf_api.py", line 5467, in hf_hub_download
+    return hf_hub_download(
+           ^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1014, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1175, in _hf_hub_download_to_cache_dir
+    _download_to_tmp_and_move(
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1727, in _download_to_tmp_and_move
+    xet_get(
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 633, in xet_get
+    download_files(
+OSError: I/O error: IO Error: No space left on device (os error 28)
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 470, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/api/task.py", line 1052, in download
+    self.dataset = datasets.load_dataset(
+                   ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/load.py", line 1708, in load_dataset
+    builder_instance.download_and_prepare(
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/builder.py", line 882, in download_and_prepare
+    self._download_and_prepare(
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/builder.py", line 921, in _download_and_prepare
+    split_generators: list[SplitGenerator] = self._split_generators(dl_manager, **split_generators_kwargs)
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/packaged_modules/parquet/parquet.py", line 110, in _split_generators
+    data_files = dl_manager.download(self.config.data_files)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/download/download_manager.py", line 159, in download
+    downloaded_path_or_paths = map_nested(
+                               ^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/utils/py_utils.py", line 503, in map_nested
+    map_nested(
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/utils/py_utils.py", line 536, in map_nested
+    mapped = parallel_map(
+             ^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/utils/experimental.py", line 41, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/parallel/parallel.py", line 34, in parallel_map
+    return _map_with_multiprocessing_pool(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/parallel/parallel.py", line 69, in _map_with_multiprocessing_pool
+    mapped = pool.map(single_map_nested_func, split_kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/multiprocessing/pool.py", line 367, in map
+    return self._map_async(func, iterable, mapstar, chunksize).get()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/multiprocessing/pool.py", line 774, in get
+    raise self._value
+OSError: I/O error: IO Error: No space left on device (os error 28)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/__main__.py", line 335, in cli_evaluate
+    results, samples = cli_evaluate_single(args)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/__main__.py", line 479, in cli_evaluate_single
+    results = evaluator.simple_evaluate(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/utils.py", line 533, in _wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/evaluator.py", line 176, in simple_evaluate
+    task_dict = get_task_dict(tasks, task_manager)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/tasks/__init__.py", line 558, in get_task_dict
+    task_name_from_string_dict = task_manager.load_task_or_group(
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/tasks/__init__.py", line 372, in load_task_or_group
+    all_loaded_tasks = dict(collections.ChainMap(*map(self._load_individual_task_or_group, task_list)))
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/tasks/__init__.py", line 289, in _load_individual_task_or_group
+    return _load_task(task_config, task=name_or_config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/tasks/__init__.py", line 259, in _load_task
+    task_object = ConfigurableTask(config=config, model_name=self.model_name)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/api/task.py", line 720, in __init__
+    self.download(self.config.dataset_kwargs)
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 330, in wrapped_f
+    return self(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 467, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 368, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 411, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x7f3b10ea9490 state=finished raised OSError>]
+[32m2026-07-07 12:55:52.765[0m | [31m[1mERROR   [0m | [36m__main__[0m:[36mcli_evaluate[0m:[36m357[0m - [31m[1mError during evaluation: RetryError[<Future at 0x7f3b10ea9490 state=finished raised OSError>]. Please set `--verbosity=DEBUG` to get more information.[0m
+Traceback (most recent call last):
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 470, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/api/task.py", line 1052, in download
+    self.dataset = datasets.load_dataset(
+                   ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/load.py", line 1708, in load_dataset
+    builder_instance.download_and_prepare(
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/builder.py", line 836, in download_and_prepare
+    raise OSError(
+OSError: Not enough disk space. Needed: Unknown size (download: 7.54 GiB, generated: 12.10 GiB
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/__main__.py", line 335, in cli_evaluate
+    results, samples = cli_evaluate_single(args)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/__main__.py", line 479, in cli_evaluate_single
+    results = evaluator.simple_evaluate(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/utils.py", line 533, in _wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/evaluator.py", line 176, in simple_evaluate
+    task_dict = get_task_dict(tasks, task_manager)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/tasks/__init__.py", line 558, in get_task_dict
+    task_name_from_string_dict = task_manager.load_task_or_group(
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/tasks/__init__.py", line 372, in load_task_or_group
+    all_loaded_tasks = dict(collections.ChainMap(*map(self._load_individual_task_or_group, task_list)))
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/tasks/__init__.py", line 289, in _load_individual_task_or_group
+    return _load_task(task_config, task=name_or_config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/tasks/__init__.py", line 259, in _load_task
+    task_object = ConfigurableTask(config=config, model_name=self.model_name)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/api/task.py", line 720, in __init__
+    self.download(self.config.dataset_kwargs)
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 330, in wrapped_f
+    return self(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 467, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 368, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 411, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x7f1f2d717e60 state=finished raised OSError>]
+[32m2026-07-07 12:55:52.795[0m | [31m[1mERROR   [0m | [36m__main__[0m:[36mcli_evaluate[0m:[36m357[0m - [31m[1mError during evaluation: RetryError[<Future at 0x7f1f2d717e60 state=finished raised OSError>]. Please set `--verbosity=DEBUG` to get more information.[0m
+Traceback (most recent call last):
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 470, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/api/task.py", line 1052, in download
+    self.dataset = datasets.load_dataset(
+                   ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/load.py", line 1708, in load_dataset
+    builder_instance.download_and_prepare(
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/builder.py", line 836, in download_and_prepare
+    raise OSError(
+OSError: Not enough disk space. Needed: Unknown size (download: 7.54 GiB, generated: 12.10 GiB
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/__main__.py", line 335, in cli_evaluate
+    results, samples = cli_evaluate_single(args)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/__main__.py", line 479, in cli_evaluate_single
+    results = evaluator.simple_evaluate(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/utils.py", line 533, in _wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/evaluator.py", line 176, in simple_evaluate
+    task_dict = get_task_dict(tasks, task_manager)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/tasks/__init__.py", line 558, in get_task_dict
+    task_name_from_string_dict = task_manager.load_task_or_group(
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/tasks/__init__.py", line 372, in load_task_or_group
+    all_loaded_tasks = dict(collections.ChainMap(*map(self._load_individual_task_or_group, task_list)))
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/tasks/__init__.py", line 289, in _load_individual_task_or_group
+    return _load_task(task_config, task=name_or_config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/tasks/__init__.py", line 259, in _load_task
+    task_object = ConfigurableTask(config=config, model_name=self.model_name)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/api/task.py", line 720, in __init__
+    self.download(self.config.dataset_kwargs)
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 330, in wrapped_f
+    return self(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 467, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 368, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 411, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x7f46905ed8b0 state=finished raised OSError>]
+[32m2026-07-07 12:55:52.804[0m | [31m[1mERROR   [0m | [36m__main__[0m:[36mcli_evaluate[0m:[36m357[0m - [31m[1mError during evaluation: RetryError[<Future at 0x7f46905ed8b0 state=finished raised OSError>]. Please set `--verbosity=DEBUG` to get more information.[0m
+Traceback (most recent call last):
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 470, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/api/task.py", line 1052, in download
+    self.dataset = datasets.load_dataset(
+                   ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/load.py", line 1708, in load_dataset
+    builder_instance.download_and_prepare(
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/datasets/builder.py", line 836, in download_and_prepare
+    raise OSError(
+OSError: Not enough disk space. Needed: Unknown size (download: 7.54 GiB, generated: 12.10 GiB
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/__main__.py", line 335, in cli_evaluate
+    results, samples = cli_evaluate_single(args)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/__main__.py", line 479, in cli_evaluate_single
+    results = evaluator.simple_evaluate(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/utils.py", line 533, in _wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/evaluator.py", line 176, in simple_evaluate
+    task_dict = get_task_dict(tasks, task_manager)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/tasks/__init__.py", line 558, in get_task_dict
+    task_name_from_string_dict = task_manager.load_task_or_group(
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/tasks/__init__.py", line 372, in load_task_or_group
+    all_loaded_tasks = dict(collections.ChainMap(*map(self._load_individual_task_or_group, task_list)))
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/tasks/__init__.py", line 289, in _load_individual_task_or_group
+    return _load_task(task_config, task=name_or_config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/tasks/__init__.py", line 259, in _load_task
+    task_object = ConfigurableTask(config=config, model_name=self.model_name)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/zh/work/VisionSelector/lmms-eval/lmms_eval/api/task.py", line 720, in __init__
+    self.download(self.config.dataset_kwargs)
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 330, in wrapped_f
+    return self(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 467, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 368, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/tenacity/__init__.py", line 411, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x7f03971e4770 state=finished raised OSError>]
+[32m2026-07-07 12:55:52.809[0m | [31m[1mERROR   [0m | [36m__main__[0m:[36mcli_evaluate[0m:[36m357[0m - [31m[1mError during evaluation: RetryError[<Future at 0x7f03971e4770 state=finished raised OSError>]. Please set `--verbosity=DEBUG` to get more information.[0m
+[rank0]:[W707 12:55:53.180737511 ProcessGroupNCCL.cpp:1496] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())

@@ -1,0 +1,14 @@
+Error.  nthreads cannot be larger than environment variable "NUMEXPR_MAX_THREADS" (64)prefetch: lmms-lab/DocVQA (DocVQA)
+`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'lmms-lab/DocVQA' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+ok: lmms-lab/DocVQA
+prefetch: lmms-lab/ChartQA (None)
+`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'lmms-lab/ChartQA' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+ok: lmms-lab/ChartQA
+prefetch: lmms-lab/textvqa (None)
+`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'lmms-lab/textvqa' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
