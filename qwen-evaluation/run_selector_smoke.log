@@ -1,323 +1,0 @@
-+ export http_proxy=http://10.229.18.27:8412
-+ http_proxy=http://10.229.18.27:8412
-+ export https_proxy=http://10.229.18.27:8412
-+ https_proxy=http://10.229.18.27:8412
-+ export HTTP_PROXY=http://10.229.18.27:8412
-+ HTTP_PROXY=http://10.229.18.27:8412
-+ export HTTPS_PROXY=http://10.229.18.27:8412
-+ HTTPS_PROXY=http://10.229.18.27:8412
-+ HF_CACHE_ROOT=/tmp/zh/work/VisionSelector/.cache/huggingface
-+ DEFAULT_HF_CACHE=/home/zhanghao360/.cache/huggingface
-+ mkdir -p /tmp/zh/work/VisionSelector/.cache/huggingface/hub /tmp/zh/work/VisionSelector/.cache/huggingface/datasets /tmp/zh/work/VisionSelector/.cache/huggingface/tmp
-+ '[' -d /home/zhanghao360/.cache/huggingface ']'
-+ '[' '!' -L /home/zhanghao360/.cache/huggingface ']'
-+ '[' '!' -e /home/zhanghao360/.cache/huggingface ']'
-+ export HF_HOME=/tmp/zh/work/VisionSelector/.cache/huggingface
-+ HF_HOME=/tmp/zh/work/VisionSelector/.cache/huggingface
-+ export HF_HUB_CACHE=/tmp/zh/work/VisionSelector/.cache/huggingface/hub
-+ HF_HUB_CACHE=/tmp/zh/work/VisionSelector/.cache/huggingface/hub
-+ export HUGGINGFACE_HUB_CACHE=/tmp/zh/work/VisionSelector/.cache/huggingface/hub
-+ HUGGINGFACE_HUB_CACHE=/tmp/zh/work/VisionSelector/.cache/huggingface/hub
-+ export HF_DATASETS_CACHE=/tmp/zh/work/VisionSelector/.cache/huggingface/datasets
-+ HF_DATASETS_CACHE=/tmp/zh/work/VisionSelector/.cache/huggingface/datasets
-+ export TRANSFORMERS_CACHE=/tmp/zh/work/VisionSelector/.cache/huggingface/hub
-+ TRANSFORMERS_CACHE=/tmp/zh/work/VisionSelector/.cache/huggingface/hub
-+ export TMPDIR=/tmp/zh/work/VisionSelector/.cache/huggingface/tmp
-+ TMPDIR=/tmp/zh/work/VisionSelector/.cache/huggingface/tmp
-+ EVAL_TIME=False
-+ BASE_COMMAND='CUDA_VISIBLE_DEVICES=0,1,2,3 python3 -m accelerate.commands.launch     --main_process_port=0     --mixed_precision=bf16     --num_processes=4     -m lmms_eval     --model qwen2_5_vl_with_token_compression     --batch_size 1     --log_samples'
-+ METHODS=("selector 3b attn_implementation="flash_attention_2"")
-+ BUDGETS=(0.2)
-+ MODEL_PATH=../output_ckpt/VisionSelector-Qwen2.5-VL-3B
-+ MODEL_NAME=VisionSelector-Qwen2.5-VL-3B
-+ TASKS=("docvqa_val" "chartqa" "textvqa_val" "ocrbench" "scienceqa_img" "ai2d_no_mask" "mmmu_val" "mme" "pope")
-+ for TASK in "${TASKS[@]}"
-+ for METHOD_CONFIG in "${METHODS[@]}"
-++ echo 'selector 3b attn_implementation=flash_attention_2'
-++ awk '{print $1}'
-+ METHOD=selector
-++ echo 'selector 3b attn_implementation=flash_attention_2'
-++ awk '{print $2}'
-+ FILENAME=3b
-++ echo 'selector 3b attn_implementation=flash_attention_2'
-++ awk '{$1="";$2=""; print $0}'
-++ xargs
-+ ADDITIONAL_ARGS=attn_implementation=flash_attention_2
-+ for BUDGET in "${BUDGETS[@]}"
-+ OUTPUT_PATH=./result/eval_smoke/docvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b
-+ LOG_FILE=./result/eval_smoke/docvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b/log_time.log
-+ compgen -G './result/eval_smoke/docvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b/*results*.json'
-+ '[' -d ./result/eval_smoke/docvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b ']'
-+ echo 'incomplete run detected, cleaning: ./result/eval_smoke/docvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b'
-incomplete run detected, cleaning: ./result/eval_smoke/docvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b
-+ rm -rf ./result/eval_smoke/docvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b
-+ mkdir -p ./result/eval_smoke/docvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b
-+ MODEL_ARGS=pretrained=../output_ckpt/VisionSelector-Qwen2.5-VL-3B,method=selector,budgets=0.2,attn_implementation=flash_attention_2
-+ COMMAND='EVAL_TIME=False CUDA_VISIBLE_DEVICES=0,1,2,3 python3 -m accelerate.commands.launch     --main_process_port=0     --mixed_precision=bf16     --num_processes=4     -m lmms_eval     --model qwen2_5_vl_with_token_compression     --batch_size 1     --log_samples --limit 4 --tasks docvqa_val --output_path ./result/eval_smoke/docvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b --log_samples_suffix docvqa_val --model_args "pretrained=../output_ckpt/VisionSelector-Qwen2.5-VL-3B,method=selector,budgets=0.2,attn_implementation=flash_attention_2"'
-+ tee ./result/eval_smoke/docvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b/log_time.log
-+ eval 'EVAL_TIME=False CUDA_VISIBLE_DEVICES=0,1,2,3 python3 -m accelerate.commands.launch     --main_process_port=0     --mixed_precision=bf16     --num_processes=4     -m lmms_eval     --model qwen2_5_vl_with_token_compression     --batch_size 1     --log_samples --limit 4 --tasks docvqa_val --output_path ./result/eval_smoke/docvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b --log_samples_suffix docvqa_val --model_args "pretrained=../output_ckpt/VisionSelector-Qwen2.5-VL-3B,method=selector,budgets=0.2,attn_implementation=flash_attention_2"'
-++ EVAL_TIME=False
-++ CUDA_VISIBLE_DEVICES=0,1,2,3
-++ python3 -m accelerate.commands.launch --main_process_port=0 --mixed_precision=bf16 --num_processes=4 -m lmms_eval --model qwen2_5_vl_with_token_compression --batch_size 1 --log_samples --limit 4 --tasks docvqa_val --output_path ./result/eval_smoke/docvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b --log_samples_suffix docvqa_val --model_args pretrained=../output_ckpt/VisionSelector-Qwen2.5-VL-3B,method=selector,budgets=0.2,attn_implementation=flash_attention_2
-The following values were not passed to `accelerate launch` and had defaults used instead:
-		More than one GPU was found, enabling multi-GPU training.
-		If this was unintended please pass in `--num_processes=1`.
-	`--num_machines` was set to a value of `1`
-	`--dynamo_backend` was set to a value of `'no'`
-To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
-Error.  nthreads cannot be larger than environment variable "NUMEXPR_MAX_THREADS" (64)Error.  nthreads cannot be larger than environment variable "NUMEXPR_MAX_THREADS" (64)Error.  nthreads cannot be larger than environment variable "NUMEXPR_MAX_THREADS" (64)Error.  nthreads cannot be larger than environment variable "NUMEXPR_MAX_THREADS" (64)/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/transformers/utils/hub.py:105: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
-  warnings.warn(
-/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/transformers/utils/hub.py:105: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
-  warnings.warn(
-/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/transformers/utils/hub.py:105: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
-  warnings.warn(
-/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/transformers/utils/hub.py:105: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
-  warnings.warn(
-[32m2026-07-07 13:37:28.169[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate[0m:[36m296[0m - [1mVerbosity set to INFO[0m
-[RANK 0] Detected kernel version 4.18.0, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
-[32m2026-07-07 13:37:28.495[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate[0m:[36m296[0m - [1mVerbosity set to INFO[0m
-[32m2026-07-07 13:37:28.515[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate[0m:[36m296[0m - [1mVerbosity set to INFO[0m
-[32m2026-07-07 13:37:28.530[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate[0m:[36m296[0m - [1mVerbosity set to INFO[0m
-[32m2026-07-07 13:37:29.813[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m386[0m - [1mEvaluation tracker args: {'output_path': './result/eval_smoke/docvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b'}[0m
-[32m2026-07-07 13:37:29.813[0m | [33m[1mWARNING [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m408[0m - [33m[1m --limit SHOULD ONLY BE USED FOR TESTING.REAL METRICS SHOULD NOT BE COMPUTED USING LIMIT.[0m
-[32m2026-07-07 13:37:29.813[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m475[0m - [1mSelected Tasks: ['docvqa_val'][0m
-[32m2026-07-07 13:37:29.815[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36msimple_evaluate[0m:[36m158[0m - [1mSetting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234[0m
-[32m2026-07-07 13:37:30.195[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m386[0m - [1mEvaluation tracker args: {'output_path': './result/eval_smoke/docvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b'}[0m
-[32m2026-07-07 13:37:30.195[0m | [33m[1mWARNING [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m408[0m - [33m[1m --limit SHOULD ONLY BE USED FOR TESTING.REAL METRICS SHOULD NOT BE COMPUTED USING LIMIT.[0m
-[32m2026-07-07 13:37:30.196[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m475[0m - [1mSelected Tasks: ['docvqa_val'][0m
-[32m2026-07-07 13:37:30.197[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36msimple_evaluate[0m:[36m158[0m - [1mSetting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234[0m
-[32m2026-07-07 13:37:30.201[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m386[0m - [1mEvaluation tracker args: {'output_path': './result/eval_smoke/docvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b'}[0m
-[32m2026-07-07 13:37:30.201[0m | [33m[1mWARNING [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m408[0m - [33m[1m --limit SHOULD ONLY BE USED FOR TESTING.REAL METRICS SHOULD NOT BE COMPUTED USING LIMIT.[0m
-[32m2026-07-07 13:37:30.201[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m475[0m - [1mSelected Tasks: ['docvqa_val'][0m
-[32m2026-07-07 13:37:30.202[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36msimple_evaluate[0m:[36m158[0m - [1mSetting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234[0m
-[32m2026-07-07 13:37:30.284[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m386[0m - [1mEvaluation tracker args: {'output_path': './result/eval_smoke/docvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b'}[0m
-[32m2026-07-07 13:37:30.284[0m | [33m[1mWARNING [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m408[0m - [33m[1m --limit SHOULD ONLY BE USED FOR TESTING.REAL METRICS SHOULD NOT BE COMPUTED USING LIMIT.[0m
-[32m2026-07-07 13:37:30.284[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m475[0m - [1mSelected Tasks: ['docvqa_val'][0m
-[32m2026-07-07 13:37:30.285[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36msimple_evaluate[0m:[36m158[0m - [1mSetting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234[0m
-[RANK 0] Detected kernel version 4.18.0, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
-using selector
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]using selector
-using selector
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]using selector
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:01<00:01,  1.77s/it]Loading checkpoint shards:  50%|█████     | 1/2 [00:01<00:01,  1.58s/it]Loading checkpoint shards:  50%|█████     | 1/2 [00:01<00:01,  1.58s/it]Loading checkpoint shards:  50%|█████     | 1/2 [00:01<00:01,  1.89s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.01s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.13s/it]
-Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.50, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
-Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.08it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.03s/it]
-Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.50, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
-Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.14s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.01s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.25s/it]
-Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.09s/it]
-Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.50, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
-Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.50, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
-[32m2026-07-07 13:37:37.644[0m | [1mINFO    [0m | [36mlmms_eval.api.task[0m:[36mbuild_all_requests[0m:[36m425[0m - [1mBuilding contexts for docvqa_val on rank 2...[0m
-  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00, 2204.05it/s]
-[32m2026-07-07 13:37:37.683[0m | [1mINFO    [0m | [36mlmms_eval.models.qwen2_5_vl_with_token_compression[0m:[36m__init__[0m:[36m161[0m - [1mUsing 4 devices with data parallelism[0m
-[32m2026-07-07 13:37:37.684[0m | [1mINFO    [0m | [36mlmms_eval.api.task[0m:[36mbuild_all_requests[0m:[36m425[0m - [1mBuilding contexts for docvqa_val on rank 0...[0m
-  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00, 1920.47it/s]
-[32m2026-07-07 13:37:38.054[0m | [1mINFO    [0m | [36mlmms_eval.api.task[0m:[36mbuild_all_requests[0m:[36m425[0m - [1mBuilding contexts for docvqa_val on rank 1...[0m
-  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00, 1922.23it/s]
-[32m2026-07-07 13:37:38.120[0m | [1mINFO    [0m | [36mlmms_eval.api.task[0m:[36mbuild_all_requests[0m:[36m425[0m - [1mBuilding contexts for docvqa_val on rank 3...[0m
-  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00, 1949.93it/s]
-[32m2026-07-07 13:37:39.655[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36mevaluate[0m:[36m465[0m - [1mRunning generate_until requests[0m
-[32m2026-07-07 13:37:39.655[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36mevaluate[0m:[36m465[0m - [1mRunning generate_until requests[0m
-[32m2026-07-07 13:37:39.655[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36mevaluate[0m:[36m465[0m - [1mRunning generate_until requests[0m
-[32m2026-07-07 13:37:39.655[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36mevaluate[0m:[36m465[0m - [1mRunning generate_until requests[0m
-Model Responding:   0%|          | 0/1 [00:00<?, ?it/s][2026-07-07 13:37:39,847] [INFO] [real_accelerator.py:222:get_accelerator] Setting ds_accelerator to cuda (auto detect)
-[2026-07-07 13:37:39,847] [INFO] [real_accelerator.py:222:get_accelerator] Setting ds_accelerator to cuda (auto detect)
-[2026-07-07 13:37:39,972] [INFO] [real_accelerator.py:222:get_accelerator] Setting ds_accelerator to cuda (auto detect)
-[2026-07-07 13:37:39,986] [INFO] [real_accelerator.py:222:get_accelerator] Setting ds_accelerator to cuda (auto detect)
-Generated Iutput Average 2053.0 tokens ===========
-Generated Output Average 4.0 tokens
-Model Responding: 100%|██████████| 1/1 [00:02<00:00,  2.12s/it]Model Responding: 100%|██████████| 1/1 [00:02<00:00,  2.12s/it]
-Generated Iutput Average 2094.0 tokens ===========
-Generated Output Average 5.0 tokens
-Generated Iutput Average 1139.0 tokens ===========
-Generated Output Average 7.0 tokens
-Generated Iutput Average 1139.0 tokens ===========
-Generated Output Average 3.0 tokens
-Postprocessing:   0%|          | 0/1 [00:00<?, ?it/s]Postprocessing: 100%|██████████| 1/1 [00:00<00:00, 1634.57it/s]
-[32m2026-07-07 13:37:42.455[0m | [1mINFO    [0m | [36mlmms_eval.loggers.evaluation_tracker[0m:[36msave_results_aggregated[0m:[36m188[0m - [1mSaving results aggregated[0m
-[32m2026-07-07 13:37:42.455[0m | [1mINFO    [0m | [36mlmms_eval.loggers.evaluation_tracker[0m:[36msave_results_samples[0m:[36m255[0m - [1mSaving per-sample results for: docvqa_val[0m
-qwen2_5_vl_with_token_compression (pretrained=../output_ckpt/VisionSelector-Qwen2.5-VL-3B,method=selector,budgets=0.2,attn_implementation=flash_attention_2), gen_kwargs: (), limit: 4.0, num_fewshot: None, batch_size: 1
-|  Tasks   |Version|Filter|n-shot|Metric|   |Value|   |Stderr|
-|----------|-------|------|-----:|------|---|----:|---|-----:|
-|docvqa_val|Yaml   |none  |     0|anls  |↑  |    1|±  |     0|
-
-+ [[ false == \t\r\u\e ]]
-+ for TASK in "${TASKS[@]}"
-+ for METHOD_CONFIG in "${METHODS[@]}"
-++ echo 'selector 3b attn_implementation=flash_attention_2'
-++ awk '{print $1}'
-+ METHOD=selector
-++ echo 'selector 3b attn_implementation=flash_attention_2'
-++ awk '{print $2}'
-+ FILENAME=3b
-++ echo 'selector 3b attn_implementation=flash_attention_2'
-++ awk '{$1="";$2=""; print $0}'
-++ xargs
-+ ADDITIONAL_ARGS=attn_implementation=flash_attention_2
-+ for BUDGET in "${BUDGETS[@]}"
-+ OUTPUT_PATH=./result/eval_smoke/chartqa/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b
-+ LOG_FILE=./result/eval_smoke/chartqa/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b/log_time.log
-+ compgen -G './result/eval_smoke/chartqa/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b/*results*.json'
-+ '[' -d ./result/eval_smoke/chartqa/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b ']'
-+ echo 'incomplete run detected, cleaning: ./result/eval_smoke/chartqa/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b'
-incomplete run detected, cleaning: ./result/eval_smoke/chartqa/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b
-+ rm -rf ./result/eval_smoke/chartqa/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b
-+ mkdir -p ./result/eval_smoke/chartqa/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b
-+ MODEL_ARGS=pretrained=../output_ckpt/VisionSelector-Qwen2.5-VL-3B,method=selector,budgets=0.2,attn_implementation=flash_attention_2
-+ COMMAND='EVAL_TIME=False CUDA_VISIBLE_DEVICES=0,1,2,3 python3 -m accelerate.commands.launch     --main_process_port=0     --mixed_precision=bf16     --num_processes=4     -m lmms_eval     --model qwen2_5_vl_with_token_compression     --batch_size 1     --log_samples --limit 4 --tasks chartqa --output_path ./result/eval_smoke/chartqa/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b --log_samples_suffix chartqa --model_args "pretrained=../output_ckpt/VisionSelector-Qwen2.5-VL-3B,method=selector,budgets=0.2,attn_implementation=flash_attention_2"'
-+ tee ./result/eval_smoke/chartqa/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b/log_time.log
-+ eval 'EVAL_TIME=False CUDA_VISIBLE_DEVICES=0,1,2,3 python3 -m accelerate.commands.launch     --main_process_port=0     --mixed_precision=bf16     --num_processes=4     -m lmms_eval     --model qwen2_5_vl_with_token_compression     --batch_size 1     --log_samples --limit 4 --tasks chartqa --output_path ./result/eval_smoke/chartqa/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b --log_samples_suffix chartqa --model_args "pretrained=../output_ckpt/VisionSelector-Qwen2.5-VL-3B,method=selector,budgets=0.2,attn_implementation=flash_attention_2"'
-++ EVAL_TIME=False
-++ CUDA_VISIBLE_DEVICES=0,1,2,3
-++ python3 -m accelerate.commands.launch --main_process_port=0 --mixed_precision=bf16 --num_processes=4 -m lmms_eval --model qwen2_5_vl_with_token_compression --batch_size 1 --log_samples --limit 4 --tasks chartqa --output_path ./result/eval_smoke/chartqa/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b --log_samples_suffix chartqa --model_args pretrained=../output_ckpt/VisionSelector-Qwen2.5-VL-3B,method=selector,budgets=0.2,attn_implementation=flash_attention_2
-The following values were not passed to `accelerate launch` and had defaults used instead:
-		More than one GPU was found, enabling multi-GPU training.
-		If this was unintended please pass in `--num_processes=1`.
-	`--num_machines` was set to a value of `1`
-	`--dynamo_backend` was set to a value of `'no'`
-To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
-Error.  nthreads cannot be larger than environment variable "NUMEXPR_MAX_THREADS" (64)Error.  nthreads cannot be larger than environment variable "NUMEXPR_MAX_THREADS" (64)Error.  nthreads cannot be larger than environment variable "NUMEXPR_MAX_THREADS" (64)Error.  nthreads cannot be larger than environment variable "NUMEXPR_MAX_THREADS" (64)/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/transformers/utils/hub.py:105: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
-  warnings.warn(
-/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/transformers/utils/hub.py:105: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
-  warnings.warn(
-/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/transformers/utils/hub.py:105: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
-  warnings.warn(
-/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/transformers/utils/hub.py:105: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
-  warnings.warn(
-[32m2026-07-07 13:37:52.272[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate[0m:[36m296[0m - [1mVerbosity set to INFO[0m
-[32m2026-07-07 13:37:52.369[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate[0m:[36m296[0m - [1mVerbosity set to INFO[0m
-[32m2026-07-07 13:37:52.390[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate[0m:[36m296[0m - [1mVerbosity set to INFO[0m
-[32m2026-07-07 13:37:52.403[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate[0m:[36m296[0m - [1mVerbosity set to INFO[0m
-[RANK 0] Detected kernel version 4.18.0, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
-[32m2026-07-07 13:37:54.058[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m386[0m - [1mEvaluation tracker args: {'output_path': './result/eval_smoke/chartqa/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b'}[0m
-[32m2026-07-07 13:37:54.058[0m | [33m[1mWARNING [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m408[0m - [33m[1m --limit SHOULD ONLY BE USED FOR TESTING.REAL METRICS SHOULD NOT BE COMPUTED USING LIMIT.[0m
-[32m2026-07-07 13:37:54.058[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m475[0m - [1mSelected Tasks: ['chartqa'][0m
-[32m2026-07-07 13:37:54.059[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36msimple_evaluate[0m:[36m158[0m - [1mSetting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234[0m
-[32m2026-07-07 13:37:54.178[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m386[0m - [1mEvaluation tracker args: {'output_path': './result/eval_smoke/chartqa/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b'}[0m
-[32m2026-07-07 13:37:54.179[0m | [33m[1mWARNING [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m408[0m - [33m[1m --limit SHOULD ONLY BE USED FOR TESTING.REAL METRICS SHOULD NOT BE COMPUTED USING LIMIT.[0m
-[32m2026-07-07 13:37:54.179[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m475[0m - [1mSelected Tasks: ['chartqa'][0m
-[32m2026-07-07 13:37:54.180[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36msimple_evaluate[0m:[36m158[0m - [1mSetting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234[0m
-[32m2026-07-07 13:37:54.187[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m386[0m - [1mEvaluation tracker args: {'output_path': './result/eval_smoke/chartqa/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b'}[0m
-[32m2026-07-07 13:37:54.187[0m | [33m[1mWARNING [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m408[0m - [33m[1m --limit SHOULD ONLY BE USED FOR TESTING.REAL METRICS SHOULD NOT BE COMPUTED USING LIMIT.[0m
-[32m2026-07-07 13:37:54.187[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m475[0m - [1mSelected Tasks: ['chartqa'][0m
-[32m2026-07-07 13:37:54.188[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36msimple_evaluate[0m:[36m158[0m - [1mSetting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234[0m
-[32m2026-07-07 13:37:54.202[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m386[0m - [1mEvaluation tracker args: {'output_path': './result/eval_smoke/chartqa/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b'}[0m
-[32m2026-07-07 13:37:54.202[0m | [33m[1mWARNING [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m408[0m - [33m[1m --limit SHOULD ONLY BE USED FOR TESTING.REAL METRICS SHOULD NOT BE COMPUTED USING LIMIT.[0m
-[32m2026-07-07 13:37:54.202[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m475[0m - [1mSelected Tasks: ['chartqa'][0m
-[32m2026-07-07 13:37:54.203[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36msimple_evaluate[0m:[36m158[0m - [1mSetting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234[0m
-using selector
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]using selector
-[RANK 0] Detected kernel version 4.18.0, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
-using selector
-using selector
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:01<00:01,  1.48s/it]Loading checkpoint shards:  50%|█████     | 1/2 [00:01<00:01,  1.65s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:01<00:00,  1.11it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:01<00:00,  1.01it/s]
-Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.50, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
-Loading checkpoint shards:  50%|█████     | 1/2 [00:01<00:01,  1.79s/it]Loading checkpoint shards:  50%|█████     | 1/2 [00:01<00:01,  1.70s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.04s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.13s/it]
-Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.50, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
-Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.15s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.25s/it]
-Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.13s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.21s/it]
-Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.50, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
-Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.50, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
-[32m2026-07-07 13:38:01.080[0m | [1mINFO    [0m | [36mlmms_eval.evaluator_utils[0m:[36mfrom_taskdict[0m:[36m91[0m - [1mNo metadata found in task config for chartqa, using default n_shot=0[0m
-[32m2026-07-07 13:38:01.080[0m | [1mINFO    [0m | [36mlmms_eval.api.task[0m:[36mbuild_all_requests[0m:[36m425[0m - [1mBuilding contexts for chartqa on rank 2...[0m
-  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00, 2706.00it/s]
-[32m2026-07-07 13:38:01.634[0m | [1mINFO    [0m | [36mlmms_eval.evaluator_utils[0m:[36mfrom_taskdict[0m:[36m91[0m - [1mNo metadata found in task config for chartqa, using default n_shot=0[0m
-[32m2026-07-07 13:38:01.634[0m | [1mINFO    [0m | [36mlmms_eval.api.task[0m:[36mbuild_all_requests[0m:[36m425[0m - [1mBuilding contexts for chartqa on rank 3...[0m
-  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00, 3287.07it/s]
-[32m2026-07-07 13:38:01.870[0m | [1mINFO    [0m | [36mlmms_eval.models.qwen2_5_vl_with_token_compression[0m:[36m__init__[0m:[36m161[0m - [1mUsing 4 devices with data parallelism[0m
-[32m2026-07-07 13:38:01.871[0m | [1mINFO    [0m | [36mlmms_eval.evaluator_utils[0m:[36mfrom_taskdict[0m:[36m91[0m - [1mNo metadata found in task config for chartqa, using default n_shot=0[0m
-[32m2026-07-07 13:38:01.871[0m | [1mINFO    [0m | [36mlmms_eval.api.task[0m:[36mbuild_all_requests[0m:[36m425[0m - [1mBuilding contexts for chartqa on rank 0...[0m
-  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00, 2632.96it/s]
-[32m2026-07-07 13:38:01.897[0m | [1mINFO    [0m | [36mlmms_eval.evaluator_utils[0m:[36mfrom_taskdict[0m:[36m91[0m - [1mNo metadata found in task config for chartqa, using default n_shot=0[0m
-[32m2026-07-07 13:38:01.897[0m | [1mINFO    [0m | [36mlmms_eval.api.task[0m:[36mbuild_all_requests[0m:[36m425[0m - [1mBuilding contexts for chartqa on rank 1...[0m
-  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00, 2624.72it/s]
-[32m2026-07-07 13:38:03.412[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36mevaluate[0m:[36m465[0m - [1mRunning generate_until requests[0m
-[32m2026-07-07 13:38:03.412[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36mevaluate[0m:[36m465[0m - [1mRunning generate_until requests[0m
-[32m2026-07-07 13:38:03.412[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36mevaluate[0m:[36m465[0m - [1mRunning generate_until requests[0m
-[32m2026-07-07 13:38:03.412[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36mevaluate[0m:[36m465[0m - [1mRunning generate_until requests[0m
-Model Responding:   0%|          | 0/1 [00:00<?, ?it/s][2026-07-07 13:38:03,484] [INFO] [real_accelerator.py:222:get_accelerator] Setting ds_accelerator to cuda (auto detect)
-[2026-07-07 13:38:03,490] [INFO] [real_accelerator.py:222:get_accelerator] Setting ds_accelerator to cuda (auto detect)
-[2026-07-07 13:38:03,493] [INFO] [real_accelerator.py:222:get_accelerator] Setting ds_accelerator to cuda (auto detect)
-[2026-07-07 13:38:03,493] [INFO] [real_accelerator.py:222:get_accelerator] Setting ds_accelerator to cuda (auto detect)
-Generated Iutput Average 669.0 tokens ===========
-Generated Output Average 2.0 tokens
-Generated Iutput Average 668.0 tokens ===========
-Generated Output Average 2.0 tokens
-Model Responding: 100%|██████████| 1/1 [00:01<00:00,  1.64s/it]Model Responding: 100%|██████████| 1/1 [00:01<00:00,  1.64s/it]
-Generated Iutput Average 670.0 tokens ===========
-Generated Output Average 3.0 tokens
-Generated Iutput Average 670.0 tokens ===========
-Generated Output Average 5.0 tokens
-Postprocessing:   0%|          | 0/1 [00:00<?, ?it/s]Postprocessing: 100%|██████████| 1/1 [00:00<00:00, 1897.88it/s]
-[32m2026-07-07 13:38:05.244[0m | [1mINFO    [0m | [36mlmms_eval.loggers.evaluation_tracker[0m:[36msave_results_aggregated[0m:[36m188[0m - [1mSaving results aggregated[0m
-[32m2026-07-07 13:38:05.245[0m | [1mINFO    [0m | [36mlmms_eval.loggers.evaluation_tracker[0m:[36msave_results_samples[0m:[36m255[0m - [1mSaving per-sample results for: chartqa[0m
-qwen2_5_vl_with_token_compression (pretrained=../output_ckpt/VisionSelector-Qwen2.5-VL-3B,method=selector,budgets=0.2,attn_implementation=flash_attention_2), gen_kwargs: (), limit: 4.0, num_fewshot: None, batch_size: 1
-| Tasks |Version|Filter|n-shot|      Metric       |   |Value|   |Stderr|
-|-------|-------|------|-----:|-------------------|---|----:|---|-----:|
-|chartqa|Yaml   |none  |     0|relaxed_human_split|↑  |  0.5|±  |0.2887|
-|chartqa|Yaml   |none  |     0|relaxed_overall    |↑  |  0.5|±  |0.2887|
-
-+ [[ false == \t\r\u\e ]]
-+ for TASK in "${TASKS[@]}"
-+ for METHOD_CONFIG in "${METHODS[@]}"
-++ echo 'selector 3b attn_implementation=flash_attention_2'
-++ awk '{print $1}'
-+ METHOD=selector
-++ echo 'selector 3b attn_implementation=flash_attention_2'
-++ awk '{print $2}'
-+ FILENAME=3b
-++ echo 'selector 3b attn_implementation=flash_attention_2'
-++ awk '{$1="";$2=""; print $0}'
-++ xargs
-+ ADDITIONAL_ARGS=attn_implementation=flash_attention_2
-+ for BUDGET in "${BUDGETS[@]}"
-+ OUTPUT_PATH=./result/eval_smoke/textvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b
-+ LOG_FILE=./result/eval_smoke/textvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b/log_time.log
-+ compgen -G './result/eval_smoke/textvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b/*results*.json'
-+ '[' -d ./result/eval_smoke/textvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b ']'
-+ echo 'incomplete run detected, cleaning: ./result/eval_smoke/textvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b'
-incomplete run detected, cleaning: ./result/eval_smoke/textvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b
-+ rm -rf ./result/eval_smoke/textvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b
-+ mkdir -p ./result/eval_smoke/textvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b
-+ MODEL_ARGS=pretrained=../output_ckpt/VisionSelector-Qwen2.5-VL-3B,method=selector,budgets=0.2,attn_implementation=flash_attention_2
-+ COMMAND='EVAL_TIME=False CUDA_VISIBLE_DEVICES=0,1,2,3 python3 -m accelerate.commands.launch     --main_process_port=0     --mixed_precision=bf16     --num_processes=4     -m lmms_eval     --model qwen2_5_vl_with_token_compression     --batch_size 1     --log_samples --limit 4 --tasks textvqa_val --output_path ./result/eval_smoke/textvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b --log_samples_suffix textvqa_val --model_args "pretrained=../output_ckpt/VisionSelector-Qwen2.5-VL-3B,method=selector,budgets=0.2,attn_implementation=flash_attention_2"'
-+ tee ./result/eval_smoke/textvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b/log_time.log
-+ eval 'EVAL_TIME=False CUDA_VISIBLE_DEVICES=0,1,2,3 python3 -m accelerate.commands.launch     --main_process_port=0     --mixed_precision=bf16     --num_processes=4     -m lmms_eval     --model qwen2_5_vl_with_token_compression     --batch_size 1     --log_samples --limit 4 --tasks textvqa_val --output_path ./result/eval_smoke/textvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b --log_samples_suffix textvqa_val --model_args "pretrained=../output_ckpt/VisionSelector-Qwen2.5-VL-3B,method=selector,budgets=0.2,attn_implementation=flash_attention_2"'
-++ EVAL_TIME=False
-++ CUDA_VISIBLE_DEVICES=0,1,2,3
-++ python3 -m accelerate.commands.launch --main_process_port=0 --mixed_precision=bf16 --num_processes=4 -m lmms_eval --model qwen2_5_vl_with_token_compression --batch_size 1 --log_samples --limit 4 --tasks textvqa_val --output_path ./result/eval_smoke/textvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b --log_samples_suffix textvqa_val --model_args pretrained=../output_ckpt/VisionSelector-Qwen2.5-VL-3B,method=selector,budgets=0.2,attn_implementation=flash_attention_2
-The following values were not passed to `accelerate launch` and had defaults used instead:
-		More than one GPU was found, enabling multi-GPU training.
-		If this was unintended please pass in `--num_processes=1`.
-	`--num_machines` was set to a value of `1`
-	`--dynamo_backend` was set to a value of `'no'`
-To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
-Error.  nthreads cannot be larger than environment variable "NUMEXPR_MAX_THREADS" (64)Error.  nthreads cannot be larger than environment variable "NUMEXPR_MAX_THREADS" (64)Error.  nthreads cannot be larger than environment variable "NUMEXPR_MAX_THREADS" (64)Error.  nthreads cannot be larger than environment variable "NUMEXPR_MAX_THREADS" (64)/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/transformers/utils/hub.py:105: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
-  warnings.warn(
-/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/transformers/utils/hub.py:105: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
-  warnings.warn(
-/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/transformers/utils/hub.py:105: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
-  warnings.warn(
-/home/zhanghao360/miniconda3/envs/lmms/lib/python3.12/site-packages/transformers/utils/hub.py:105: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
-  warnings.warn(
-[32m2026-07-07 13:38:15.456[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate[0m:[36m296[0m - [1mVerbosity set to INFO[0m
-[32m2026-07-07 13:38:15.469[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate[0m:[36m296[0m - [1mVerbosity set to INFO[0m
-[32m2026-07-07 13:38:15.470[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate[0m:[36m296[0m - [1mVerbosity set to INFO[0m
-[32m2026-07-07 13:38:15.474[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate[0m:[36m296[0m - [1mVerbosity set to INFO[0m
-[RANK 0] Detected kernel version 4.18.0, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
-[32m2026-07-07 13:38:17.204[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m386[0m - [1mEvaluation tracker args: {'output_path': './result/eval_smoke/textvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b'}[0m
-[32m2026-07-07 13:38:17.205[0m | [33m[1mWARNING [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m408[0m - [33m[1m --limit SHOULD ONLY BE USED FOR TESTING.REAL METRICS SHOULD NOT BE COMPUTED USING LIMIT.[0m
-[32m2026-07-07 13:38:17.204[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m386[0m - [1mEvaluation tracker args: {'output_path': './result/eval_smoke/textvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b'}[0m
-[32m2026-07-07 13:38:17.205[0m | [33m[1mWARNING [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m408[0m - [33m[1m --limit SHOULD ONLY BE USED FOR TESTING.REAL METRICS SHOULD NOT BE COMPUTED USING LIMIT.[0m
-[32m2026-07-07 13:38:17.205[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m475[0m - [1mSelected Tasks: ['textvqa_val'][0m
-[32m2026-07-07 13:38:17.205[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m475[0m - [1mSelected Tasks: ['textvqa_val'][0m
-[32m2026-07-07 13:38:17.206[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36msimple_evaluate[0m:[36m158[0m - [1mSetting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234[0m
-[32m2026-07-07 13:38:17.206[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36msimple_evaluate[0m:[36m158[0m - [1mSetting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234[0m
-[32m2026-07-07 13:38:17.213[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m386[0m - [1mEvaluation tracker args: {'output_path': './result/eval_smoke/textvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b'}[0m
-[32m2026-07-07 13:38:17.213[0m | [33m[1mWARNING [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m408[0m - [33m[1m --limit SHOULD ONLY BE USED FOR TESTING.REAL METRICS SHOULD NOT BE COMPUTED USING LIMIT.[0m
-[32m2026-07-07 13:38:17.213[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m475[0m - [1mSelected Tasks: ['textvqa_val'][0m
-[32m2026-07-07 13:38:17.215[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36msimple_evaluate[0m:[36m158[0m - [1mSetting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234[0m
-[32m2026-07-07 13:38:17.229[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m386[0m - [1mEvaluation tracker args: {'output_path': './result/eval_smoke/textvqa_val/0.2/VisionSelector-Qwen2.5-VL-3B_selector_0.2_3b'}[0m
-[32m2026-07-07 13:38:17.230[0m | [33m[1mWARNING [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m408[0m - [33m[1m --limit SHOULD ONLY BE USED FOR TESTING.REAL METRICS SHOULD NOT BE COMPUTED USING LIMIT.[0m
-[32m2026-07-07 13:38:17.230[0m | [1mINFO    [0m | [36m__main__[0m:[36mcli_evaluate_single[0m:[36m475[0m - [1mSelected Tasks: ['textvqa_val'][0m
-[32m2026-07-07 13:38:17.231[0m | [1mINFO    [0m | [36mlmms_eval.evaluator[0m:[36msimple_evaluate[0m:[36m158[0m - [1mSetting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234[0m

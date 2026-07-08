@@ -1,39 +1,15 @@
 # save result path
 ROOT_DIR="./result/eval_time"
 mkdir -p "$ROOT_DIR"
-NUM_PROCESSES=4
+NUM_PROCESSES=8
 
 export OPENAI_API_URL=""
-export OPENAI_API_KEY="dummy"
+export OPENAI_API_KEY=""
 set -x
 
-export http_proxy=http://10.229.18.27:8412
-export https_proxy=http://10.229.18.27:8412
-export HTTP_PROXY=http://10.229.18.27:8412
-export HTTPS_PROXY=http://10.229.18.27:8412
-
-# HF cache on /tmp; migrate from ~/.cache once if needed
-HF_CACHE_ROOT="/tmp/zh/work/VisionSelector/.cache/huggingface"
-DEFAULT_HF_CACHE="${HOME}/.cache/huggingface"
-mkdir -p "$HF_CACHE_ROOT"/{hub,datasets,tmp}
-if [ -d "$DEFAULT_HF_CACHE" ] && [ ! -L "$DEFAULT_HF_CACHE" ]; then
-    echo "copying HF cache to $HF_CACHE_ROOT ..."
-    cp -a "$DEFAULT_HF_CACHE/." "$HF_CACHE_ROOT/"
-    rm -rf "$DEFAULT_HF_CACHE"
-    ln -sf "$HF_CACHE_ROOT" "$DEFAULT_HF_CACHE"
-elif [ ! -e "$DEFAULT_HF_CACHE" ]; then
-    ln -sf "$HF_CACHE_ROOT" "$DEFAULT_HF_CACHE"
-fi
-export HF_HOME="$HF_CACHE_ROOT"
-export HF_HUB_CACHE="$HF_CACHE_ROOT/hub"
-export HUGGINGFACE_HUB_CACHE="$HF_CACHE_ROOT/hub"
-export HF_DATASETS_CACHE="$HF_CACHE_ROOT/datasets"
-export TRANSFORMERS_CACHE="$HF_CACHE_ROOT/hub"
-export TMPDIR="$HF_CACHE_ROOT/tmp"
-
 EVAL_TIME=False
-BASE_COMMAND="CUDA_VISIBLE_DEVICES=0,1,2,3 python3 -m accelerate.commands.launch \
-    --main_process_port=0 \
+BASE_COMMAND="CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 python3 -m accelerate.commands.launch \
+    --main_process_port=28170 \
     --mixed_precision=bf16 \
     --num_processes=$NUM_PROCESSES \
     -m lmms_eval \
@@ -44,21 +20,20 @@ BASE_COMMAND="CUDA_VISIBLE_DEVICES=0,1,2,3 python3 -m accelerate.commands.launch
 # first for method name ; second for FILENAME ; third for additional args
 METHODS=(
     # Qwen2-5-VL token compression method for example
-    "selector 3b attn_implementation="flash_attention_2""
-    # "selector 7b attn_implementation="flash_attention_2""
+    "selector 7b attn_implementation="flash_attention_2""
+    # "selector 3b attn_implementation="flash_attention_2""
 )
 
 # budgets
-BUDGETS=(0.2)
+BUDGETS=(0.3 0.2 0.1)
 
 # model path
+MODEL_PATH="../output_ckpt/VisionSelector-Qwen2.5-VL-7B"
+MODEL_NAME="VisionSelector-Qwen2.5-VL-7B"
 # MODEL_PATH="../output_ckpt/VisionSelector-Qwen2.5-VL-3B"
 # MODEL_NAME="VisionSelector-Qwen2.5-VL-3B"
-MODEL_PATH="../output_ckpt/VisionSelector-Qwen2.5-VL-3B-train"
-MODEL_NAME="VisionSelector-Qwen2.5-VL-3B-train"
 
-# TASKS=("docvqa_val" "chartqa" "textvqa_val" "ocrbench" "scienceqa_img" "ai2d_no_mask" "mmmu_val" "mme" "pope")
-TASKS=("scienceqa_img" "ocrbench" "chartqa" "pope")
+TASKS=("docvqa_val" "chartqa" "textvqa_val" "ocrbench" "scienceqa_img" "ai2d_no_mask" "mmmu_val" "mme" "pope")
 
 for TASK in "${TASKS[@]}"; do
     for METHOD_CONFIG in "${METHODS[@]}"; do
@@ -80,7 +55,7 @@ for TASK in "${TASKS[@]}"; do
             MODEL_ARGS="pretrained=${MODEL_PATH},method=${METHOD},budgets=${BUDGET},${ADDITIONAL_ARGS}"
 
             COMMAND="EVAL_TIME=$EVAL_TIME ${BASE_COMMAND} --tasks ${TASK} --output_path ${OUTPUT_PATH} --log_samples_suffix ${TASK} --model_args \"${MODEL_ARGS}\""
-
+            
             {
                 eval "${COMMAND}"
                 if [[ "${EVAL_TIME,,}" == "true" ]]; then
