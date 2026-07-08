@@ -1,14 +1,15 @@
 # save result path
 ROOT_DIR="./result/eval_time"
 mkdir -p "$ROOT_DIR"
-NUM_PROCESSES=8
+NUM_PROCESSES=4
 
 export OPENAI_API_URL=""
 export OPENAI_API_KEY=""
 set -x
+export http_proxy=http://10.229.18.27:8412 export https_proxy=http://10.229.18.27:8412 export HTTP_PROXY=http://10.229.18.27:8412 export HTTPS_PROXY=http://10.229.18.27:8412
 
 EVAL_TIME=False
-BASE_COMMAND="CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 python3 -m accelerate.commands.launch \
+BASE_COMMAND="CUDA_VISIBLE_DEVICES=0,1,2,3 python3 -m accelerate.commands.launch \
     --main_process_port=28170 \
     --mixed_precision=bf16 \
     --num_processes=$NUM_PROCESSES \
@@ -20,20 +21,21 @@ BASE_COMMAND="CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 python3 -m accelerate.command
 # first for method name ; second for FILENAME ; third for additional args
 METHODS=(
     # Qwen2-5-VL token compression method for example
-    "selector 7b attn_implementation="flash_attention_2""
-    # "selector 3b attn_implementation="flash_attention_2""
+    # "selector 7b attn_implementation="flash_attention_2""
+    "selector 3b attn_implementation="flash_attention_2""
 )
 
 # budgets
-BUDGETS=(0.3 0.2 0.1)
+BUDGETS=(0.2)
 
 # model path
-MODEL_PATH="../output_ckpt/VisionSelector-Qwen2.5-VL-7B"
-MODEL_NAME="VisionSelector-Qwen2.5-VL-7B"
-# MODEL_PATH="../output_ckpt/VisionSelector-Qwen2.5-VL-3B"
-# MODEL_NAME="VisionSelector-Qwen2.5-VL-3B"
+# MODEL_PATH="../output_ckpt/VisionSelector-Qwen2.5-VL-7B"
+# MODEL_NAME="VisionSelector-Qwen2.5-VL-7B"
+MODEL_PATH="../output_ckpt/VisionSelector-Qwen2.5-VL-3B-train"
+MODEL_NAME="VisionSelector-Qwen2.5-VL-3B-train"
 
-TASKS=("docvqa_val" "chartqa" "textvqa_val" "ocrbench" "scienceqa_img" "ai2d_no_mask" "mmmu_val" "mme" "pope")
+# TASKS=("docvqa_val" "chartqa" "textvqa_val" "ocrbench" "scienceqa_img" "ai2d_no_mask" "mmmu_val" "mme" "pope")
+TASKS=("chartqa" "ocrbench")
 
 for TASK in "${TASKS[@]}"; do
     for METHOD_CONFIG in "${METHODS[@]}"; do
