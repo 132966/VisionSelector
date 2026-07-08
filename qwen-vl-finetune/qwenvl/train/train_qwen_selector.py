@@ -191,12 +191,43 @@ def train(attn_implementation="flash_attention_2"):
     model.visual.forward = types.MethodType(qwen25vl_vision_tower_forward_selector, model.visual)
     if "3b" in model_args.model_name_or_path.lower():
         print("3b")
-        model.visual.importance_scorer = TransformerScorer(in_features=2048,hidden_dim=1024)
-    elif "7b" in model_args.model_name_or_path.lower():   
+        model.visual.importance_scorer = TransformerScorer(in_features=2048, num_kv_heads=2, intermediate_size=11008)
+    elif "7b" in model_args.model_name_or_path.lower():
         print("7b")
-        model.visual.importance_scorer = TransformerScorer(in_features=3584,hidden_dim=1792)
+        model.visual.importance_scorer = TransformerScorer(in_features=3584, num_kv_heads=4, intermediate_size=18944)
     else:
         raise ValueError("Model not currently supported")
+
+    # Load pretrained LLM middle layer weights for scorer initialization
+    scorer = model.visual.importance_scorer
+    if "3b" in model_args.model_name_or_path.lower():
+        scorer_init_path = project_root / "compression_method" / "scorer_init_3b.pt"
+    elif "7b" in model_args.model_name_or_path.lower():
+        scorer_init_path = project_root / "compression_method" / "scorer_init_7b.pt"
+    else:
+        raise ValueError("Model not currently supported")
+
+    if scorer_init_path.exists():
+        init_weights = torch.load(str(scorer_init_path), map_location="cpu")
+        with torch.no_grad():
+            scorer.q_proj.weight.copy_(init_weights["q_proj.weight"])
+            scorer.q_proj.bias.copy_(init_weights["q_proj.bias"])
+            scorer.k_proj.weight.copy_(init_weights["k_proj.weight"])
+            scorer.k_proj.bias.copy_(init_weights["k_proj.bias"])
+            scorer.v_proj.weight.copy_(init_weights["v_proj.weight"])
+            scorer.v_proj.bias.copy_(init_weights["v_proj.bias"])
+            scorer.o_proj.weight.copy_(init_weights["o_proj.weight"])
+            scorer.gate_proj.weight.copy_(init_weights["gate_proj.weight"])
+            scorer.up_proj.weight.copy_(init_weights["up_proj.weight"])
+            scorer.down_proj.weight.copy_(init_weights["down_proj.weight"])
+            scorer.input_layernorm.weight.copy_(init_weights["input_layernorm.weight"])
+            scorer.post_attention_layernorm.weight.copy_(init_weights["post_attention_layernorm.weight"])
+            scorer.final_layernorm.weight.copy_(init_weights["final_layernorm.weight"])
+            scorer.final_layernorm.bias.zero_()
+        print(f"Loaded scorer init weights from {scorer_init_path}")
+    else:
+        print(f"Warning: scorer init weights not found at {scorer_init_path}, using random init")
+
     model.forward = types.MethodType(qwen25vl_generation_forward_selector, model)
     # -------------------------------------------------------------------------------
 

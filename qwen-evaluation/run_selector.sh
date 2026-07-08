@@ -31,8 +31,8 @@ BUDGETS=(0.2)
 # model path
 # MODEL_PATH="../output_ckpt/VisionSelector-Qwen2.5-VL-7B"
 # MODEL_NAME="VisionSelector-Qwen2.5-VL-7B"
-MODEL_PATH="../output_ckpt/VisionSelector-Qwen2.5-VL-3B-train"
-MODEL_NAME="VisionSelector-Qwen2.5-VL-3B-train"
+MODEL_PATH="../output_ckpt/VisionSelector-Qwen2.5-VL-3B-train-V2"
+MODEL_NAME="VisionSelector-Qwen2.5-VL-3B-train-V2"
 
 # TASKS=("docvqa_val" "chartqa" "textvqa_val" "ocrbench" "scienceqa_img" "ai2d_no_mask" "mmmu_val" "mme" "pope")
 TASKS=("chartqa" "ocrbench")

@@ -121,7 +121,7 @@ class Qwen2_5_VisionTransformerPretrainedModel_Selector(Qwen2_5_VisionTransforme
             spatial_merge_size=config.spatial_merge_size,
         )
         self.gradient_checkpointing = False
-        self.importance_scorer = TransformerScorer(in_features=config.out_hidden_size,hidden_dim=config.out_hidden_size//2)
+        self.importance_scorer = None  # Will be set by parent model with LLM config
 
     def forward(self, hidden_states: torch.Tensor, grid_thw: torch.Tensor) -> torch.Tensor:
         """
@@ -201,6 +201,13 @@ class Qwen2_5_VLForConditionalGeneration_Selector(Qwen2_5_VLForConditionalGenera
         self.vocab_size = config.vocab_size
         self.lm_head = nn.Linear(config.hidden_size, config.vocab_size, bias=False)
         self.rope_deltas = None  # cache rope_deltas here
+
+        # Create scorer with LLM-matching architecture
+        self.visual.importance_scorer = TransformerScorer(
+            in_features=config.vision_config.out_hidden_size,
+            num_kv_heads=config.num_key_value_heads,
+            intermediate_size=config.intermediate_size
+        )
 
         # Initialize weights and apply final processing
         self.post_init()

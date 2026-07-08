@@ -221,7 +221,7 @@ def train():
             # model.regularization_weight = training_args.regularization_weight
             # model.regularization_weight = 2
             model.model.visual.forward = types.MethodType(llavaov15_vision_tower_forward_selector, model.model.visual)
-            model.model.visual.importance_scorer = TransformerScorer(in_features=4096, hidden_dim=2048)
+            model.model.visual.importance_scorer = TransformerScorer(in_features=4096, num_kv_heads=8, intermediate_size=11008, attention_bias=False)
             model.model.visual.budgets = training_args.budgets
             
     except Exception as e:

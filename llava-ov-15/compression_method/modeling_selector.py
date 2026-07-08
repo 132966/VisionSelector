@@ -98,7 +98,7 @@ class RiceTransformerPretrainedModel_Selector(RiceTransformerPretrainedModel):
         )
         self.gradient_checkpointing = False
         # import pdb; pdb.set_trace()
-        self.importance_scorer = TransformerScorer(in_features=4096,hidden_dim=2048)
+        self.importance_scorer = TransformerScorer(in_features=config.text_hidden_size, num_kv_heads=8, intermediate_size=11008, attention_bias=False)
 
 
     def forward(self, hidden_states: torch.Tensor, grid_thw: torch.Tensor, is_verifying: bool=False) -> torch.Tensor:

@@ -2,6 +2,10 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+from transformers.utils import is_flash_attn_2_available
+if is_flash_attn_2_available():
+    from transformers.modeling_flash_attention_utils import _flash_attention_forward
+
 
 class RMSNorm(nn.Module):
     def __init__(self, hidden_size: int, eps: float = 1e-6):
@@ -20,28 +24,31 @@ class RMSNorm(nn.Module):
 class TransformerScorer(nn.Module):
     """
     Transformer Scorer using a single bidirectional transformer layer for importance scoring.
-    Architecture: one LLM-style decoder layer (bidirectional attention, no RoPE) -> LayerNorm -> Linear.
+    Architecture: one LLM-style decoder layer (bidirectional attention, GQA, no RoPE) -> LayerNorm -> Linear.
+    Architecture matches LLM decoder layer to allow weight copying from a pretrained LLM layer.
     The final projection is initialized close to zero to minimally interfere with the original attention_sum.
     """
-    def __init__(self, in_features: int, hidden_dim: int = 1792, init_scale: float = 0.0001):
+    def __init__(self, in_features: int, num_kv_heads: int = 2,
+                 intermediate_size: int = 11008, attention_bias: bool = True,
+                 head_dim: int = 128, init_scale: float = 0.0001):
         super().__init__()
         self.in_features = in_features
-        self.hidden_dim = hidden_dim
-
-        # --- Bidirectional self-attention (no causal mask, no RoPE) ---
-        self.head_dim = 128
-        self.num_heads = in_features // self.head_dim
+        self.head_dim = head_dim
+        self.num_heads = in_features // head_dim
+        self.num_kv_heads = num_kv_heads
+        self.num_kv_groups = self.num_heads // num_kv_heads
         self.scaling = self.head_dim ** -0.5
 
-        self.q_proj = nn.Linear(in_features, self.num_heads * self.head_dim, bias=True)
-        self.k_proj = nn.Linear(in_features, self.num_heads * self.head_dim, bias=True)
-        self.v_proj = nn.Linear(in_features, self.num_heads * self.head_dim, bias=True)
-        self.o_proj = nn.Linear(self.num_heads * self.head_dim, in_features, bias=False)
+        # --- Bidirectional self-attention (GQA, no causal mask, no RoPE) ---
+        self.q_proj = nn.Linear(in_features, self.num_heads * head_dim, bias=attention_bias)
+        self.k_proj = nn.Linear(in_features, num_kv_heads * head_dim, bias=attention_bias)
+        self.v_proj = nn.Linear(in_features, num_kv_heads * head_dim, bias=attention_bias)
+        self.o_proj = nn.Linear(self.num_heads * head_dim, in_features, bias=False)
 
         # --- MLP (SwiGLU) ---
-        self.gate_proj = nn.Linear(in_features, hidden_dim, bias=False)
-        self.up_proj = nn.Linear(in_features, hidden_dim, bias=False)
-        self.down_proj = nn.Linear(hidden_dim, in_features, bias=False)
+        self.gate_proj = nn.Linear(in_features, intermediate_size, bias=False)
+        self.up_proj = nn.Linear(in_features, intermediate_size, bias=False)
+        self.down_proj = nn.Linear(intermediate_size, in_features, bias=False)
 
         # --- LayerNorms ---
         self.input_layernorm = RMSNorm(in_features)
@@ -66,19 +73,38 @@ class TransformerScorer(nn.Module):
         """
         bsz, seq_len, _ = x.shape
 
-        # --- Self-attention (bidirectional, no causal mask) ---
+        # --- Self-attention (bidirectional, GQA, no causal mask) ---
         residual = x
         x = self.input_layernorm(x)
 
         query_states = self.q_proj(x).view(bsz, seq_len, self.num_heads, self.head_dim).transpose(1, 2)
-        key_states = self.k_proj(x).view(bsz, seq_len, self.num_heads, self.head_dim).transpose(1, 2)
-        value_states = self.v_proj(x).view(bsz, seq_len, self.num_heads, self.head_dim).transpose(1, 2)
+        key_states = self.k_proj(x).view(bsz, seq_len, self.num_kv_heads, self.head_dim).transpose(1, 2)
+        value_states = self.v_proj(x).view(bsz, seq_len, self.num_kv_heads, self.head_dim).transpose(1, 2)
 
-        attn_weights = torch.matmul(query_states, key_states.transpose(2, 3)) * self.scaling
-        attn_weights = F.softmax(attn_weights, dim=-1, dtype=torch.float32).to(query_states.dtype)
-        attn_output = torch.matmul(attn_weights, value_states)
+        # Flash attention (is_causal=False for bidirectional)
+        query_states = query_states.transpose(1, 2)  # [B, N, H, D]
+        key_states = key_states.transpose(1, 2)
+        value_states = value_states.transpose(1, 2)
 
-        attn_output = attn_output.transpose(1, 2).contiguous().view(bsz, seq_len, -1)
+        if is_flash_attn_2_available():
+            attn_output = _flash_attention_forward(
+                query_states,
+                key_states,
+                value_states,
+                attention_mask=None,
+                query_length=seq_len,
+                is_causal=False,
+                dropout=0.0,
+            )
+        else:
+            # Fallback: manual attention with GQA
+            from torch.nn.functional import scaled_dot_product_attention as sdpa
+            attn_output = sdpa(
+                query_states, key_states, value_states,
+                dropout_p=0.0, is_causal=False,
+            )
+
+        attn_output = attn_output.view(bsz, seq_len, -1)
         attn_output = self.o_proj(attn_output)
 
         x = residual + attn_output
