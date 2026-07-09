@@ -55,11 +55,23 @@ class TransformerScorer(nn.Module):
         self.post_attention_layernorm = RMSNorm(in_features)
         self.final_layernorm = nn.LayerNorm(in_features)
 
-        # --- Score projection ---
-        self.score_proj = nn.Linear(in_features, 1, bias=False)
+        # --- Score projection (multi-layer MLP) ---
+        embed_dim = in_features
+        self.score_proj = nn.Sequential(
+            nn.Linear(embed_dim, embed_dim // 2, bias=True),
+            nn.SiLU(),
+            nn.Linear(embed_dim // 2, embed_dim // 4, bias=True),
+            nn.SiLU(),
+            nn.Linear(embed_dim // 4, embed_dim // 8, bias=True),
+            nn.SiLU(),
+            nn.Linear(embed_dim // 8, embed_dim // 16, bias=True),
+            nn.SiLU(),
+            nn.Linear(embed_dim // 16, 1, bias=True),
+        )
 
-        # Initialize final projection to near-zero for minimal initial interference
-        nn.init.normal_(self.score_proj.weight, std=init_scale)
+        # Initialize last layer to near-zero for minimal initial interference
+        nn.init.normal_(self.score_proj[-1].weight, std=init_scale)
+        nn.init.zeros_(self.score_proj[-1].bias)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """

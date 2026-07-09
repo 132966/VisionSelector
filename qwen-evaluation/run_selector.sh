@@ -4,7 +4,9 @@ mkdir -p "$ROOT_DIR"
 NUM_PROCESSES=4
 
 export OPENAI_API_URL=""
-export OPENAI_API_KEY=""
+export OPENAI_API_KEY="YOUR_API_KEY"
+export HF_HUB_OFFLINE=1
+export HF_TOKEN="hf_dummy"
 set -x
 export http_proxy=http://10.229.18.27:8412 export https_proxy=http://10.229.18.27:8412 export HTTP_PROXY=http://10.229.18.27:8412 export HTTPS_PROXY=http://10.229.18.27:8412
 
@@ -31,11 +33,11 @@ BUDGETS=(0.2)
 # model path
 # MODEL_PATH="../output_ckpt/VisionSelector-Qwen2.5-VL-7B"
 # MODEL_NAME="VisionSelector-Qwen2.5-VL-7B"
-MODEL_PATH="../output_ckpt/VisionSelector-Qwen2.5-VL-3B-train-V2"
-MODEL_NAME="VisionSelector-Qwen2.5-VL-3B-train-V2"
+MODEL_PATH="../output_ckpt/VisionSelector-Qwen2.5-VL-3B-train-V3"
+MODEL_NAME="VisionSelector-Qwen2.5-VL-3B-train-V3"
 
-# TASKS=("docvqa_val" "chartqa" "textvqa_val" "ocrbench" "scienceqa_img" "ai2d_no_mask" "mmmu_val" "mme" "pope")
-TASKS=("chartqa" "ocrbench")
+TASKS=("docvqa_val" "chartqa" "textvqa_val" "ocrbench" "scienceqa_img" "ai2d_no_mask" "mmmu_val" "mme" "pope")
+# TASKS=("chartqa" "ocrbench")
 
 for TASK in "${TASKS[@]}"; do
     for METHOD_CONFIG in "${METHODS[@]}"; do

@@ -1,3 +1,0 @@
-{"timestamp":"2026-07-08T07:09:37.343435Z","level":"INFO","fields":{"message":"python/3.12.13; huggingface_hub/0.36.2; hf_xet/1.5.0; , xet-core revision 6ed5a00"},"filename":"/home/runner/work/xet-core/xet-core/xet_runtime/src/logging/init.rs","line_number":65}
-{"timestamp":"2026-07-08T07:09:37.343485Z","level":"INFO","fields":{"message":"hf_xet logging configured."},"filename":"src/logging.rs","line_number":36}
-{"timestamp":"2026-07-08T07:09:37.343564Z","level":"INFO","fields":{"message":"starting log cleanup in \"/home/zhanghao360/.cache/huggingface/xet/logs\" (min_age=86400s, max_retention=1209600s, max_size=250MB bytes)"},"filename":"/home/runner/work/xet-core/xet-core/xet_runtime/src/logging/init.rs","line_number":241}

@@ -1,14 +1,17 @@
 # save result path
 ROOT_DIR="./result/eval_time"
 mkdir -p "$ROOT_DIR"
-NUM_PROCESSES=8
+NUM_PROCESSES=4
 
 export OPENAI_API_URL=""
-export OPENAI_API_KEY=""
+export OPENAI_API_KEY="YOUR_API_KEY"
+export HF_HUB_OFFLINE=1
+export HF_TOKEN="hf_dummy"
 set -x
+export http_proxy=http://10.229.18.27:8412 export https_proxy=http://10.229.18.27:8412 export HTTP_PROXY=http://10.229.18.27:8412 export HTTPS_PROXY=http://10.229.18.27:8412
 
 EVAL_TIME=False
-BASE_COMMAND="CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 python3 -m accelerate.commands.launch \
+BASE_COMMAND="CUDA_VISIBLE_DEVICES=0,1,2,3 python3 -m accelerate.commands.launch \
     --main_process_port=28175 \
     --mixed_precision=bf16 \
     --num_processes=$NUM_PROCESSES \
@@ -19,26 +22,25 @@ BASE_COMMAND="CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 python3 -m accelerate.command
 
 # first for method name ; second for FILENAME ; third for additional args
 METHODS=(
-    # Qwen2-5-VL token compression method for example
     "orig new_preprocess attn_implementation="flash_attention_2""  
-    "fastv fastv attn_implementation="flash_attention_2""
-    "prumerge+ prumerge+ attn_implementation="flash_attention_2""
-    "visionzip_official visionzip_official attn_implementation="flash_attention_2""
-    "dart dart attn_implementation="flash_attention_2""
-    "divprune divprune attn_implementation="flash_attention_2""
-    "holov flash_attn attn_implementation="flash_attention_2""
+    # "fastv fastv attn_implementation="flash_attention_2""
+    # "prumerge+ prumerge+ attn_implementation="flash_attention_2""
+    # "visionzip_official visionzip_official attn_implementation="flash_attention_2""
+    # "dart dart attn_implementation="flash_attention_2""
+    # "divprune divprune attn_implementation="flash_attention_2""
+    # "holov flash_attn attn_implementation="flash_attention_2""
 )
 
 
 # budgets
-BUDGETS=(0.3 0.2 0.1)
+BUDGETS=(0.2)
 
 # model path
-MODEL_PATH="Qwen/Qwen2.5-VL-7B-Instruct"
-MODEL_NAME="qwen25vl_7b"
+# MODEL_PATH="Qwen/Qwen2.5-VL-7B-Instruct"
+# MODEL_NAME="qwen25vl_7b"
 
-# MODEL_PATH="Qwen/Qwen2.5-VL-3B-Instruct"
-# MODEL_NAME="qwen25vl_3b"
+MODEL_PATH="../pretrained/Qwen2.5-VL-3B-Instruct"
+MODEL_NAME="Qwen2.5-VL-3B-Instruct"
 
 TASKS=("docvqa_val" "chartqa" "textvqa_val" "ocrbench" "scienceqa_img" "ai2d_no_mask" "mmmu_val" "mme" "pope")
 

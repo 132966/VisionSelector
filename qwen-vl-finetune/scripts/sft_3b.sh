@@ -25,7 +25,7 @@ entry_file=qwenvl/train/train_qwen_selector.py
 datasets=chartqa,coco%10,ocr_vqa
 # Output configuration
 run_name="qwen25vl-baseline"
-output_dir=../output_ckpt/VisionSelector-Qwen2.5-VL-3B-train-V2
+output_dir=../output_ckpt/VisionSelector-Qwen2.5-VL-3B-train-V3
 
 # Training arguments
 args="
