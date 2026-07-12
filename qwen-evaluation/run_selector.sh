@@ -10,6 +10,7 @@ export HF_TOKEN="hf_dummy"
 set -x
 export http_proxy=http://10.229.18.27:8412 export https_proxy=http://10.229.18.27:8412 export HTTP_PROXY=http://10.229.18.27:8412 export HTTPS_PROXY=http://10.229.18.27:8412
 
+
 EVAL_TIME=False
 BASE_COMMAND="CUDA_VISIBLE_DEVICES=0,1,2,3 python3 -m accelerate.commands.launch \
     --main_process_port=28170 \
@@ -33,11 +34,11 @@ BUDGETS=(0.2)
 # model path
 # MODEL_PATH="../output_ckpt/VisionSelector-Qwen2.5-VL-7B"
 # MODEL_NAME="VisionSelector-Qwen2.5-VL-7B"
-MODEL_PATH="../output_ckpt/VisionSelector-Qwen2.5-VL-3B-train-V3"
-MODEL_NAME="VisionSelector-Qwen2.5-VL-3B-train-V3"
+MODEL_PATH="../output_ckpt/VisionSelector-Qwen2.5-VL-3B-train-Layer-Attn-10epoch"
+MODEL_NAME="VisionSelector-Qwen2.5-VL-3B-train-Layer-Attn-10epoch"
 
 TASKS=("docvqa_val" "chartqa" "textvqa_val" "ocrbench" "scienceqa_img" "ai2d_no_mask" "mmmu_val" "mme" "pope")
-# TASKS=("chartqa" "ocrbench")
+# TASKS=("scienceqa_img" "textvqa_val")
 
 for TASK in "${TASKS[@]}"; do
     for METHOD_CONFIG in "${METHODS[@]}"; do

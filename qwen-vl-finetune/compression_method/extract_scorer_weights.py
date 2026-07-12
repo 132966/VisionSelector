@@ -29,15 +29,7 @@ def main():
         "q_proj.bias": llm_layer.self_attn.q_proj.bias.clone(),
         "k_proj.weight": llm_layer.self_attn.k_proj.weight.clone(),
         "k_proj.bias": llm_layer.self_attn.k_proj.bias.clone(),
-        "v_proj.weight": llm_layer.self_attn.v_proj.weight.clone(),
-        "v_proj.bias": llm_layer.self_attn.v_proj.bias.clone(),
-        "o_proj.weight": llm_layer.self_attn.o_proj.weight.clone(),
-        "gate_proj.weight": llm_layer.mlp.gate_proj.weight.clone(),
-        "up_proj.weight": llm_layer.mlp.up_proj.weight.clone(),
-        "down_proj.weight": llm_layer.mlp.down_proj.weight.clone(),
         "input_layernorm.weight": llm_layer.input_layernorm.weight.clone(),
-        "post_attention_layernorm.weight": llm_layer.post_attention_layernorm.weight.clone(),
-        "final_layernorm.weight": model.model.norm.weight.clone(),
     }
 
     torch.save(state_dict, args.output_path)

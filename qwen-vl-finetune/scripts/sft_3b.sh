@@ -25,7 +25,7 @@ entry_file=qwenvl/train/train_qwen_selector.py
 datasets=chartqa,coco%10,ocr_vqa
 # Output configuration
 run_name="qwen25vl-baseline"
-output_dir=../output_ckpt/VisionSelector-Qwen2.5-VL-3B-train-V3
+output_dir=../output_ckpt/VisionSelector-Qwen2.5-VL-3B-train-Layer-Attn-10epoch
 
 # Training arguments
 args="
@@ -40,7 +40,7 @@ args="
     --budget 0.2 \
     --bf16 \
     --output_dir ${output_dir} \
-    --num_train_epochs 1 \
+    --num_train_epochs 10 \
     --reg_weight_start 0.1 \
     --reg_weight_end 2.0 \
     --per_device_train_batch_size ${batch_size} \
