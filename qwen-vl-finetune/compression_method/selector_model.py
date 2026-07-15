@@ -303,14 +303,19 @@ def qwen25vl_generation_forward_selector(
         # Enable model parallelism
         shift_labels = shift_labels.to(shift_logits.device)
         loss = loss_fct(shift_logits, shift_labels)
-        # print('ce loss: {:.5f}'.format(loss.item()))
+
+        # Store loss components for logging
+        self.task_loss = loss.detach().item()
+        self.bce_loss = 0.0
 
         # --------------------------------add---------------------------------------------
         if pixel_values is not None:
             constraint_loss = F.binary_cross_entropy(img_mask, constraint_img_mask)
+            self.bce_loss = constraint_loss.detach().item()
             loss += self.regularization_weight * constraint_loss
-            # print('soft regularization_loss: {:.5f}'.format(self.regularization_weight * constraint_loss.item()))
         # -------------------------------------------------------------------------------
+
+        self.total_loss = loss.detach().item()
 
     if not return_dict:
         output = (logits,) + outputs[1:]

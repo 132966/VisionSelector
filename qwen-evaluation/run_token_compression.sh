@@ -42,8 +42,8 @@ BUDGETS=(0.2)
 MODEL_PATH="../pretrained/Qwen2.5-VL-3B-Instruct"
 MODEL_NAME="Qwen2.5-VL-3B-Instruct"
 
-TASKS=("docvqa_val" "chartqa" "textvqa_val" "ocrbench" "scienceqa_img" "ai2d_no_mask" "mmmu_val" "mme" "pope")
-
+# TASKS=("docvqa_val" "chartqa" "textvqa_val" "ocrbench" "scienceqa_img" "ai2d_no_mask" "mmmu_val" "mme" "pope")
+TASKS=("coco2017_cap_val" "gqa" "mmbench_en_dev" "nocaps_val" "ok_vqa_val2014")
 
 for TASK in "${TASKS[@]}"; do
     for METHOD_CONFIG in "${METHODS[@]}"; do

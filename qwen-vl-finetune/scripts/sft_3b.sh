@@ -1,4 +1,9 @@
 #!/bin/bash
+export http_proxy=http://10.229.18.27:8412 export https_proxy=http://10.229.18.27:8412 export HTTP_PROXY=http://10.229.18.27:8412 export HTTPS_PROXY=http://10.229.18.27:8412
+
+# Wandb configuration
+export WANDB_PROJECT="VisionSelector"
+export WANDB_MODE=online
 
 # Distributed training configuration
 export TORCH_DISTRIBUTED_RUN_TIMEOUT=3600
@@ -24,8 +29,8 @@ entry_file=qwenvl/train/train_qwen_selector.py
 # Dataset configuration (replace with public dataset names)
 datasets=chartqa,coco%10,ocr_vqa
 # Output configuration
-run_name="qwen25vl-baseline"
-output_dir=../output_ckpt/VisionSelector-Qwen2.5-VL-3B-train-Layer-Attn-10epoch
+run_name="VisionSelector-Qwen2.5-VL-3B-train-Layer-Attn-1epoch-20260713"
+output_dir=../output_ckpt/VisionSelector-Qwen2.5-VL-3B-train-Layer-Attn-1epoch-20260713
 
 # Training arguments
 args="
@@ -40,7 +45,7 @@ args="
     --budget 0.2 \
     --bf16 \
     --output_dir ${output_dir} \
-    --num_train_epochs 10 \
+    --num_train_epochs 1 \
     --reg_weight_start 0.1 \
     --reg_weight_end 2.0 \
     --per_device_train_batch_size ${batch_size} \
@@ -64,7 +69,7 @@ args="
     --run_name ${run_name} \
     --seed 42 \
     --data_seed 42 \
-    --report_to none"
+    --report_to wandb"
 
 # Launch training
 CUDA_VISIBLE_DEVICES="0,1,2,3" torchrun --nproc_per_node=${NPROC_PER_NODE} \

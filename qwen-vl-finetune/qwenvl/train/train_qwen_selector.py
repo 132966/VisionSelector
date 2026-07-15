@@ -82,14 +82,28 @@ class ScheduledWeightTrainer(Trainer):
         actual_model = model.module if hasattr(model, 'module') else model
         actual_model.regularization_weight = current_weight
 
-        # Log the weight
-        if self.state.global_step > 0 and self.state.global_step % self.args.logging_steps == 0:
-            # Print only on the main process to avoid duplicates
-            if self.is_world_process_zero():
-                print(f"\n[Step {self.state.global_step}] Set regularization_weight to: {current_weight:.4f}")
-
         # Call the parent's compute_loss method
-        return super().compute_loss(model, inputs, return_outputs=return_outputs, num_items_in_batch=num_items_in_batch)
+        outputs = super().compute_loss(model, inputs, return_outputs=return_outputs, num_items_in_batch=num_items_in_batch)
+
+        # Log individual loss components
+        if self.is_world_process_zero() and self.state.global_step > 0 and self.state.global_step % self.args.logging_steps == 0:
+            task_loss = getattr(actual_model, 'task_loss', 0.0)
+            bce_loss = getattr(actual_model, 'bce_loss', 0.0)
+            total_loss = getattr(actual_model, 'total_loss', 0.0)
+            print(f"[Step {self.state.global_step}] total_loss: {total_loss:.5f}, task_loss: {task_loss:.5f}, bce_loss: {bce_loss:.5f}, reg_weight: {current_weight:.4f}")
+            try:
+                import wandb
+                if wandb.run is not None:
+                    wandb.log({
+                        'task_loss': task_loss,
+                        'bce_loss': bce_loss,
+                        'total_loss': total_loss,
+                        'reg_weight': current_weight,
+                    }, step=self.state.global_step)
+            except ImportError:
+                pass
+
+        return outputs
 
 
 
