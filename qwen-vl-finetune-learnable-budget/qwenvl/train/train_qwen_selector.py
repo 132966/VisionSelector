@@ -230,6 +230,12 @@ def set_model(model_args, model):
         for n, p in model.visual.importance_scorer.named_parameters():
             p.requires_grad = True
         # budget is inside importance_scorer, so it's already handled by the loop above
+        if model_args.disable_scorer:
+            # Freeze scorer parameters (q_proj, k_proj, input_layernorm), keep budget trainable
+            for n, p in model.visual.importance_scorer.named_parameters():
+                if 'budget' not in n:
+                    p.requires_grad = False
+            print("disable_scorer=True: scorer parameters frozen, only budget is trainable")
     else:
         for n, p in model.visual.importance_scorer.named_parameters():
             p.requires_grad = False
@@ -277,28 +283,53 @@ def train(attn_implementation="flash_attention_2"):
     else:
         raise ValueError("Model not currently supported")
 
-    # Load pretrained LLM middle layer weights for scorer initialization
+    # Load pretrained scorer weights
     scorer = model.visual.importance_scorer
-    if "3b" in model_args.model_name_or_path.lower():
-        scorer_init_path = project_root / "compression_method" / "scorer_init_3b.pt"
-    elif "7b" in model_args.model_name_or_path.lower():
-        scorer_init_path = project_root / "compression_method" / "scorer_init_7b.pt"
+    if model_args.scorer_ckpt is not None:
+        # Load scorer weights from specified checkpoint
+        scorer_ckpt_path = Path(model_args.scorer_ckpt)
+        if scorer_ckpt_path.exists():
+            ckpt_weights = torch.load(str(scorer_ckpt_path), map_location="cpu")
+            with torch.no_grad():
+                scorer.q_proj.weight.copy_(ckpt_weights["q_proj.weight"])
+                scorer.q_proj.bias.copy_(ckpt_weights["q_proj.bias"])
+                scorer.k_proj.weight.copy_(ckpt_weights["k_proj.weight"])
+                scorer.k_proj.bias.copy_(ckpt_weights["k_proj.bias"])
+                scorer.input_layernorm.weight.copy_(ckpt_weights["input_layernorm.weight"])
+                if "budget" in ckpt_weights:
+                    scorer.budget.copy_(ckpt_weights["budget"])
+                    print(f"Loaded scorer weights + budget from {scorer_ckpt_path}")
+                else:
+                    print(f"Loaded scorer weights (no budget) from {scorer_ckpt_path}")
+        else:
+            raise FileNotFoundError(f"Specified scorer_ckpt not found: {scorer_ckpt_path}")
     else:
-        raise ValueError("Model not currently supported")
+        # Default: load from scorer_init_*.pt
+        if "3b" in model_args.model_name_or_path.lower():
+            scorer_init_path = project_root / "compression_method" / "scorer_init_3b.pt"
+        elif "7b" in model_args.model_name_or_path.lower():
+            scorer_init_path = project_root / "compression_method" / "scorer_init_7b.pt"
+        else:
+            raise ValueError("Model not currently supported")
 
-    if scorer_init_path.exists():
-        init_weights = torch.load(str(scorer_init_path), map_location="cpu")
-        with torch.no_grad():
-            scorer.q_proj.weight.copy_(init_weights["q_proj.weight"])
-            scorer.q_proj.bias.copy_(init_weights["q_proj.bias"])
-            scorer.k_proj.weight.copy_(init_weights["k_proj.weight"])
-            scorer.k_proj.bias.copy_(init_weights["k_proj.bias"])
-            scorer.input_layernorm.weight.copy_(init_weights["input_layernorm.weight"])
-        print(f"Loaded scorer init weights from {scorer_init_path}")
-    else:
-        print(f"Warning: scorer init weights not found at {scorer_init_path}, using random init")
+        if scorer_init_path.exists():
+            init_weights = torch.load(str(scorer_init_path), map_location="cpu")
+            with torch.no_grad():
+                scorer.q_proj.weight.copy_(init_weights["q_proj.weight"])
+                scorer.q_proj.bias.copy_(init_weights["q_proj.bias"])
+                scorer.k_proj.weight.copy_(init_weights["k_proj.weight"])
+                scorer.k_proj.bias.copy_(init_weights["k_proj.bias"])
+                scorer.input_layernorm.weight.copy_(init_weights["input_layernorm.weight"])
+            print(f"Loaded scorer init weights from {scorer_init_path}")
+        else:
+            print(f"Warning: scorer init weights not found at {scorer_init_path}, using random init")
 
     model.forward = types.MethodType(qwen25vl_generation_forward_selector, model)
+
+    # Set disable_scorer flag on model (used in loss computation)
+    model.disable_scorer = model_args.disable_scorer
+    if model_args.disable_scorer:
+        print("disable_scorer=True: BCE loss weight will be 0, scorer parameters frozen, only budget trainable")
 
     # Initialize compression_weight for compression loss (will be updated by curriculum learning in compute_loss)
     model.compression_weight = training_args.compression_weight_start

@@ -319,9 +319,13 @@ def qwen25vl_generation_forward_selector(
         # --------------------------------add---------------------------------------------
         if pixel_values is not None:
             # Constraint loss: push soft mask toward hard mask
-            constraint_loss = F.binary_cross_entropy(img_mask, constraint_img_mask)
-            self.bce_loss = constraint_loss.detach().item()
-            loss += self.regularization_weight * constraint_loss
+            # When disable_scorer=True, BCE loss weight is 0 (scorer is frozen, no need to constrain mask)
+            if not getattr(self, 'disable_scorer', False):
+                constraint_loss = F.binary_cross_entropy(img_mask, constraint_img_mask)
+                self.bce_loss = constraint_loss.detach().item()
+                loss += self.regularization_weight * constraint_loss
+            else:
+                self.bce_loss = 0.0
 
             # Compression loss: penalize higher budget (encourage keeping fewer tokens)
             compression_loss = budget_value

@@ -29,8 +29,8 @@ entry_file=qwenvl/train/train_qwen_selector.py
 # Dataset configuration (replace with public dataset names)
 datasets=chartqa,coco%10,ocr_vqa
 # Output configuration
-run_name="VisionSelector-Qwen2.5-VL-3B-LearnableBudget-3epoch-20260714"
-output_dir=../output_ckpt/VisionSelector-Qwen2.5-VL-3B-LearnableBudget-3epoch-20260714
+run_name="VisionSelector-Qwen2.5-VL-3B-LearnableBudget-STE-1epoch-20260715"
+output_dir=../output_ckpt/VisionSelector-Qwen2.5-VL-3B-LearnableBudget-STE-1epoch-20260715-0.5
 
 # Training arguments
 args="
@@ -42,9 +42,11 @@ args="
     --tune_mm_mlp False \
     --tune_mm_llm False \
     --tune_compressor True \
-    --budget 0.5 \
-    --compression_weight_start 0.05 \
-    --compression_weight_end 0.5 \
+    --disable_scorer True \
+    --scorer_ckpt ../output_ckpt/VisionSelector-Qwen2.5-VL-3B-train-Layer-Attn-10epoch/scorer_weights.pt \
+    --budget 0.2 \
+    --compression_weight_start 0.1 \
+    --compression_weight_end 0.1 \
     --budget_lr 0.01 \
     --bf16 \
     --output_dir ${output_dir} \

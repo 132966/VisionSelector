@@ -11,6 +11,7 @@ class ModelArguments:
     tune_mm_vision: bool = field(default=False)
     tune_compressor: bool = field(default=False)
     budget: Optional[float] = None
+    disable_scorer: bool = field(default=False, metadata={"help": "Disable scorer: no token selection, all visual tokens are kept (baseline mode)"})
     gumbel_start_tau: float = field(default=1.0, metadata={"help": "Starting value for gumbel_tau"})
     gumbel_end_tau: float = field(default=0.1, metadata={"help": "Ending value for gumbel_tau"})
 

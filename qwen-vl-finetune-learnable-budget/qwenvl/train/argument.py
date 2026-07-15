@@ -10,6 +10,8 @@ class ModelArguments:
     tune_mm_mlp: bool = field(default=False)
     tune_mm_vision: bool = field(default=False)
     tune_compressor: bool = field(default=False)
+    disable_scorer: bool = field(default=False, metadata={"help": "Freeze scorer parameters (q_proj/k_proj/input_layernorm), only train budget. BCE loss weight becomes 0."})
+    scorer_ckpt: Optional[str] = field(default=None, metadata={"help": "Path to pretrained scorer checkpoint (.pt file). If specified, loads scorer weights from this file instead of scorer_init_*.pt"})
     budget: Optional[float] = None
     gumbel_start_tau: float = field(default=1.0, metadata={"help": "Starting value for gumbel_tau"})
     gumbel_end_tau: float = field(default=0.1, metadata={"help": "Ending value for gumbel_tau"})
